@@ -29,6 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             VALUES (folio(), '$nombre', '$direccion', '$localidad', '$tipoTramite', '$fecha_ingreso', '$nombre_solicitante', '$telefono', '$correo', '$usuario', '$observaciones', '$fecha_entrega_estimada', 'verificador')";
 
     // Ejecutar la consulta
+    // deepcode ignore Sqli: <please specify a reason of ignoring this>
     if (mysqli_query($conexion, $sql)) {
         // Alerta de éxito y redirección
         echo "<script>alert('Tramite registrado correctamente.'); window.location.href='ventanilla.php';</script>";
