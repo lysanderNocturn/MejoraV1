@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // deepcode ignore Sqli: <please specify a reason of ignoring this>
     if (mysqli_query($conexion, $sql)) {
         // Alerta de éxito y redirección
-        echo "<script>alert('Tramite registrado correctamente.'); window.location.href='ventanilla.php';</script>";
+        echo "<script>alert('Tramite registrado correctamente.'); window.location.href='extra.php';</script>";
     } else {
         // Alerta de error
         echo "<script>alert('Error al registrar Tramite: " . mysqli_error($conexion) . "');</script>";

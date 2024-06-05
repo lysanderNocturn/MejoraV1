@@ -1,29 +1,30 @@
 <?php
-// Definir la URL a la que se redirigirá después de hacer clic en "Aceptar" en la alerta
-$redirectUrl = 'extra.php';
-
-// Verificar si se ha enviado el formulario
+// Verificar si se han recibido datos del formulario
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    
-    // Incluir archivo de conexión a la base de datos
-    include('../conection.php');
+    // Incluir el archivo de conexión a la base de datos
+    include ('../conection.php');
 
-    // Obtener los datos del formulario
+    // Recoger los datos del formulario
     $folio = $_POST['folio'];
     $ubicacion = $_POST['ubicacion'];
-    $coordenadas = $_POST['coordenadas'];
+    // Aquí puedes manejar la imagen si necesitas guardarla en la base de datos o en el servidor.
 
-    // Consulta SQL para actualizar los datos
-    $sql = "UPDATE formulario SET ubicacion_geologica = '$ubicacion', coordenadas = '$coordenadas' WHERE folio = $folio";
+    // Preparar la consulta SQL para actualizar la base de datos
+    $sql = "UPDATE formulario SET ubicacion = '$ubicacion' WHERE folio = '$folio'";
+
+    // Obtener una conexión nueva
+    $conn = connection();
 
     // Ejecutar la consulta
     if ($conn->query($sql) === TRUE) {
-        echo "<script>alert('Los datos se actualizaron correctamente.'); window.location.href = '$redirectUrl';</script>";
+        // Éxito al actualizar la base de datos
+        echo "Los datos se actualizaron correctamente.";
     } else {
-        throw new Exception("Error al ejecutar la consulta: " . $conn->error);
+        // Error al actualizar la base de datos
+        echo "Error: " . $sql . "<br>" . $conn->error;
     }
 
-    // Cerrar la conexión
+    // Cerrar la conexión a la base de datos
     $conn->close();
 }
 ?>
