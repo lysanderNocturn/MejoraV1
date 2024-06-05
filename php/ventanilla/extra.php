@@ -58,17 +58,25 @@
                 <input type="text" class="form-control" id="ubicacion" name="ubicacion" placeholder="Escribe la ubicación o selecciona en el mapa" required readonly>
               </div>
 
+              <!-- Agrega campos para escanear y agregar imágenes -->
               <div class="mb-3">
-                <label for="imagen" class="form-label">Imagen de Referencia</label>
-                <input type="file" class="form-control" id="imagen" name="imagen" accept="image/*">
-                <img id="imagen-preview">
+                <label for="escrituras" class="form-label">Escrituras del Inmueble</label>
+                <input type="file" class="form-control" id="escrituras" name="escrituras" accept="image/*">
               </div>
 
-              <button type="submit" class="btn btn-primary">Guardar</button>
-              <div id="mensaje-envio" style="margin-top: 10px; display: none;"></div>
+              <div class="mb-3">
+                <label for="boleta-predial" class="form-label">Boleta del Predial</label>
+                <input type="file" class="form-control" id="boleta-predial" name="boleta-predial" accept="image/*">
+              </div>
 
+              <div class="mb-3">
+                <label for="identificacion" class="form-label">Identificación Oficial</label>
+                <input type="file" class="form-control" id="identificacion" name="identificacion" accept="image/*">
+              </div>
 
               <!-- Fin del formulario -->
+              <button type="submit" class="btn btn-primary">Guardar</button>
+              <div id="mensaje-envio" style="margin-top: 10px; display: none;"></div>
             </form>
           </div>
         </div>
@@ -123,6 +131,7 @@
     }
 
     map.on('click', onMapClick);
+
   </script>
 </body>
 

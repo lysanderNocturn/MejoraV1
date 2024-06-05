@@ -38,7 +38,7 @@
         // Definir la proyección UTM para la zona 13 Norte
         proj4.defs('EPSG:32613', '+proj=utm +zone=13 +datum=WGS84 +units=m +no_defs');
 
-        var map = L.map('map').setView([22.22662, -102.32547], 13);
+        var map = L.map('map').setView([22.22662, -102.32547], 14);
 
         L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
