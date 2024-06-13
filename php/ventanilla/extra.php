@@ -84,7 +84,7 @@
     </div>
     <div class="row justify-content-center mt-4">
       <div class="col-md-10">
-        <h2 class="text-center mb-4">Mapa usando Leaflet</h2>
+        <h2 class="text-center mb-4">Mapa Interactivo</h2>
         <div id="map"></div>
       </div>
     </div>
