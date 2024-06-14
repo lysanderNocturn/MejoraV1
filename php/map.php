@@ -51,7 +51,15 @@
             className: "esri-icon-printer",
             disabled: false,
             type: "button"
-          }]
+          },
+          {
+            id: "mark",
+            title: "marcar",
+            className : "esri-icon-home",
+            disabled: false,
+            type: "button"
+          }
+        ]
         }
       });
 
