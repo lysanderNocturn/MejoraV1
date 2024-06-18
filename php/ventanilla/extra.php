@@ -105,12 +105,13 @@
 
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
-      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">Powered By map</a>'
     }).addTo(map);
 
     var popup = L.popup();
 
     function onMapClick(e) {
+      
       var lat = e.latlng.lat.toFixed(5);
       var lon = e.latlng.lng.toFixed(5);
 
@@ -128,6 +129,8 @@
       // Agregar marcador al mapa
       L.marker(e.latlng).addTo(map)
         .bindPopup("Coordenadas: " + lat + ", " + lon).openPopup();
+
+        
     }
 
     map.on('click', onMapClick);
