@@ -78,14 +78,14 @@
                     <div class="card mb-4 shadow">
                         <div class="card-body">
                             <h2 class="card-title">Envíanos un mensaje</h2>
-                            <form action="enviar_mensaje.php" method="post" id="contact-form">
+                            <form action="iniciar.php" method="post" id="contact-form">
                                 <div class="form-group">
-                                    <label for="nombre"><i class="fas fa-user mr-2"></i>Nombre:</label>
+                                    <label for="nombre"><i class="fas fa-usuario mr-2"></i>Nombre:</label>
                                     <input type="text" class="form-control" id="nombre" name="nombre">
                                 </div>
                                 <div class="form-group">
-                                    <label for="email"><i class="fas fa-envelope mr-2"></i>Email:</label>
-                                    <input type="email" class="form-control" id="email" name="email">
+                                    <label for="usuario"><i class="fas fa-envelope mr-2"></i>usuario:</label>
+                                    <input type="usuario" class="form-control" id="usuario" name="usuario">
                                 </div>
                                 <div class="form-group">
                                     <label for="mensaje"><i class="fas fa-comment mr-2"></i>Mensaje:</label>
@@ -163,17 +163,17 @@
             Swal.fire({
                 title: 'Inicia sesión',
                 html:
-                    '<input type="email" id="email" class="swal2-input" placeholder="Correo electrónico">' +
+                    '<input type="usuario" id="usuario" class="swal2-input" placeholder="Usuario">' +
                     '<input type="password" id="password" class="swal2-input" placeholder="Contraseña">',
                 confirmButtonText: 'Iniciar sesión',
                 focusConfirm: false,
                 preConfirm: () => {
-                    const email = Swal.getPopup().querySelector('#email').value;
+                    const usuario = Swal.getPopup().querySelector('#usuario').value;
                     const password = Swal.getPopup().querySelector('#password').value;
-                    if (!email || !password) {
+                    if (!usuario || !password) {
                         Swal.showValidationMessage('Por favor, completa todos los campos');
                     }
-                 axios.post('/login', { email, password })
+                 axios.post('/iniciar', { usuario, password })
                          .then(response => {
                              if (response.data.success) {
                                  Swal.fire('¡Bienvenido!', 'Has iniciado sesión correctamente', 'success');
