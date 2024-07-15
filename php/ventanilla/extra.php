@@ -75,7 +75,7 @@
               </div>
 
               <!-- Fin del formulario -->
-              <button type="submit" class="btn btn-primary">Guardar</button>
+              <button type="submit" class="btn btn-primary">Enviar averificar</button>
               <div id="mensaje-envio" style="margin-top: 10px; display: none;"></div>
             </form>
           </div>
@@ -103,15 +103,20 @@
 
     var map = L.map('map').setView([22.22662, -102.32547], 13);
 
-    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
-      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">Powered By map</a>'
+      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
     var popup = L.popup();
 
+    var marker;
+
     function onMapClick(e) {
-      
+      if (marker) {
+        map.removeLayer(marker);
+      }
+
       var lat = e.latlng.lat.toFixed(5);
       var lon = e.latlng.lng.toFixed(5);
 
@@ -123,14 +128,27 @@
       var utmInput = document.getElementById('ubicacion');
       utmInput.value = utmX + ", " + utmY;
 
-      // Mostrar en consola
-      console.log("Coordenadas UTM: " + utmInput.value);
+      // Obtener la dirección usando Nominatim
+      var url = `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lon}`;
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          var direccion = data.display_name;
+          var popupContent = `
+            <b>Coordenadas:</b> ${lat}, ${lon}<br>
+            <b>Coordenadas UTM:</b> ${utmX}, ${utmY}<br>
+            <b>Dirección:</b> ${direccion}<br>
+          `;
+          // Agregar marcador al mapa con popup
+          marker = L.marker(e.latlng).addTo(map)
+            .bindPopup(popupContent).openPopup();
 
-      // Agregar marcador al mapa
-      L.marker(e.latlng).addTo(map)
-        .bindPopup("Coordenadas: " + lat + ", " + lon).openPopup();
-
-        
+          // Deshabilitar eventos de clic en el mapa después de la primera selección
+          map.clean('click');
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+        });
     }
 
     map.on('click', onMapClick);

@@ -173,7 +173,7 @@
                     if (!usuario || !password) {
                         Swal.showValidationMessage('Por favor, completa todos los campos');
                     }
-                 axios.post('/iniciar', { usuario, password })
+                 axios.post('/iniciar.php', { usuario, password })
                          .then(response => {
                              if (response.data.success) {
                                  Swal.fire('¡Bienvenido!', 'Has iniciado sesión correctamente', 'success');
@@ -187,6 +187,24 @@
                          });
                 }
             })
+        });
+        // Si se establece la cookie de "recordarme", rellenar el campo de usuario
+        document.addEventListener("DOMContentLoaded", function () {
+            if (localStorage.getItem("recordarme") === "true") {
+                document.getElementById("username").value = localStorage.getItem("usuarioRecordado");
+                document.getElementById("rememberMe").checked = true;
+            }
+        });
+
+        // Guardar datos de inicio de sesión en localStorage si se marca la casilla de "recordarme"
+        document.getElementById("loginForm").addEventListener("submit", function () {
+            if (document.getElementById("rememberMe").checked) {
+                localStorage.setItem("recordarme", "true");
+                localStorage.setItem("usuarioRecordado", document.getElementById("username").value);
+            } else {
+                localStorage.removeItem("recordarme");
+                localStorage.removeItem("usuarioRecordado");
+            }
         });
     </script>
 </body>

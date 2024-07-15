@@ -55,7 +55,7 @@
                         <input type="text" id="searchInput" placeholder="Buscar..." class="form-control">
                         <button id="searchButton" class="btn btn-primary mt-2">Buscar</button>
                         <br><br>
-                        <table class="table m-12 p-2">
+                        <table class="table table-hover">
                             <thead>
                                 <tr>
                                     <th>Folio</th>
@@ -97,7 +97,7 @@
                                 <?php
                                         }
                                     } else {
-                                        echo "<tr><td colspan='11'>No hay registros</td></tr>";
+                                        echo "<tr><td colspan='12'>No hay registros</td></tr>";
                                     }
                                 ?>
                             </tbody>
