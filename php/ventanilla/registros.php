@@ -54,6 +54,7 @@
                         <br>
                         <input type="text" id="searchInput" placeholder="Buscar..." class="form-control">
                         <button id="searchButton" class="btn btn-primary mt-2">Buscar</button>
+                        <button id="downloadButton" class="btn btn-secondary mt-2">Descargar</button>
                         <br><br>
                         <table class="table table-hover">
                             <thead>
@@ -62,6 +63,7 @@
                                     <th>Nombre del propietario</th>
                                     <th>Dirección</th>
                                     <th>Localidad</th>
+                                    <th>Ubicación</th>
                                     <th>Tipo de trámite</th>
                                     <th>Fecha de ingreso</th>
                                     <th>Nombre del solicitante</th>
@@ -69,7 +71,6 @@
                                     <th>Correo</th>
                                     <th>Usuario que recibe</th>
                                     <th>Comentarios</th>
-                                    <th>Procedimiento</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -85,6 +86,7 @@
                                                 <td><?php echo $mostrar['nombre_propietario'] ?></td>
                                                 <td><?php echo $mostrar['direccion'] ?></td>
                                                 <td><?php echo $mostrar['localidad'] ?></td>
+                                                <td><?php echo $mostrar['ubicacion'] ?></td>
                                                 <td><?php echo $mostrar['tipo_tramite'] ?></td>
                                                 <td><?php echo $mostrar['fecha_ingreso'] ?></td>
                                                 <td><?php echo $mostrar['nombre_solicitante'] ?></td>
@@ -92,12 +94,11 @@
                                                 <td><?php echo $mostrar['correo'] ?></td>
                                                 <td><?php echo $mostrar['usuario_recibe'] ?></td>
                                                 <td><?php echo $mostrar['observaciones'] ?></td>
-                                                <td><?php echo $mostrar['estatus'] ?></td>
                                             </tr>
                                 <?php
                                         }
                                     } else {
-                                        echo "<tr><td colspan='12'>No hay registros</td></tr>";
+                                        echo "<tr><td colspan='13'>No hay registros</td></tr>";
                                     }
                                 ?>
                             </tbody>
@@ -109,6 +110,7 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script>
         $(document).ready(function() {
             $('#searchButton').click(function() {
@@ -127,6 +129,31 @@
                         $(this).hide();
                     }
                 });
+            });
+
+            $('#downloadButton').click(function() {
+                var wb = XLSX.utils.book_new();
+                var ws_data = [];
+                var rows = $('table tr:visible');
+
+                rows.each(function(index) {
+                    var row = [];
+                    $(this).find('th, td').each(function() {
+                        row.push($(this).text().trim());
+                    });
+                    ws_data.push(row);
+                });
+
+                var ws = XLSX.utils.aoa_to_sheet(ws_data);
+                XLSX.utils.book_append_sheet(wb, ws, "Datos Filtrados");
+
+                var date = new Date();
+                var formattedDate = date.getFullYear() + "-" +
+                    ("0" + (date.getMonth() + 1)).slice(-2) + "-" +
+                    ("0" + date.getDate()).slice(-2);
+
+                var filename = "reporte_" + formattedDate + ".xlsx";
+                XLSX.writeFile(wb, filename);
             });
         });
     </script>
