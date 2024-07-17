@@ -77,7 +77,7 @@
                                 <?php
                                     include('../conection.php');
                                     $conexion = connection();
-                                    $sql = "SELECT * FROM formulario";
+                                    $sql = "SELECT * FROM `formulario` ORDER BY `formulario`.`folio` DESC";
                                     $result = mysqli_query($conexion, $sql);
                                     if (mysqli_num_rows($result) > 0) {
                                         while ($mostrar = mysqli_fetch_array($result)) { ?>
@@ -112,7 +112,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script>
-        $(document).ready(function() {
+            $(document).ready(function() {
             $('#searchButton').click(function() {
                 var searchText = $('#searchInput').val().toLowerCase();
                 $('table tbody tr').each(function() {
@@ -139,7 +139,8 @@
                 rows.each(function(index) {
                     var row = [];
                     $(this).find('th, td').each(function() {
-                        row.push($(this).text().trim());
+                        var cellText = $(this).text().trim();
+                        row.push(cellText === "" ? "NULL" : cellText);
                     });
                     ws_data.push(row);
                 });

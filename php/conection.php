@@ -20,7 +20,7 @@ function connection(){
 
 // Obtener los folios registrados
 $conn = connection();
-$sql = "SELECT folio FROM formulario";
+$sql = "SELECT * FROM `formulario` ORDER BY `formulario`.`folio` DESC";
 $result = $conn->query($sql);
 $conn->close();
 ?>

@@ -9,8 +9,6 @@
     <link rel="stylesheet" href="../../css/ventanilla.css">
     
     <style>
-       
-
         .card {
             border: none;
             border-radius: 15px;
@@ -133,23 +131,37 @@
     </form>
 
     <script>
+        function transformarDatos() {
+            var inputs = document.querySelectorAll('input, textarea');
+            var accentMap = {
+                'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u',
+                'Á': 'A', 'É': 'E', 'Í': 'I', 'Ó': 'O', 'Ú': 'U'
+            };
+
+            inputs.forEach(function(input) {
+                var value = input.value.toUpperCase().replace(/[áéíóúÁÉÍÓÚ]/g, function(match) {
+                    return accentMap[match];
+                }).replace(/[.,]/g, ''); // Remover puntos y comas
+                input.value = value;
+            });
+        }
+
         function validarFormulario() {
-            // Validación de ejemplo: Verificar si se ha ingresado un nombre
+            // Transformar datos antes de validarlos
+            transformarDatos();
+
             var nombre = document.getElementById('nombre').value;
             if (nombre === '') {
                 alert('Por favor ingresa su nombre.');
                 return false;
             }
 
-            // Validación de ejemplo: Verificar si se ha ingresado un teléfono y si tiene el formato correcto
             var telefono = document.getElementById('telefono').value;
-            var telefonoPattern = /^\d{10}$/; // Expresión regular para validar un número de teléfono de 10 dígitos
+            var telefonoPattern = /^\d{10}$/; 
             if (telefono === '' || !telefonoPattern.test(telefono)) {
                 alert('Por favor ingresa un número de teléfono válido.');
                 return false;
             }
-
-            // Puedes agregar más validaciones aquí según tus necesidades
 
             return true; 
         }
