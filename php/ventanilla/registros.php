@@ -10,6 +10,12 @@
     <style>
         body {
             background-color: #f0f8ff;
+            animation: backgroundFade 3s infinite alternate;
+        }
+
+        @keyframes backgroundFade {
+            0% { background-color: #f0f8ff; }
+            100% { background-color: #e0f7fa; }
         }
 
         .card {
@@ -24,7 +30,7 @@
         }
 
         .card:hover {
-            transform: scale(1.006);
+            transform: scale(1.01);
         }
 
         .form-group label {
@@ -40,6 +46,90 @@
         .btn-primary:hover {
             background-color: #2962ff;
             border-color: #2962ff;
+            transform: scale(1.05);
+        }
+
+        .btn-secondary:hover {
+            transform: scale(1.05);
+        }
+
+        .form-control {
+            animation: inputPulse 2s infinite alternate;
+        }
+
+        @keyframes inputPulse {
+            0% { border-color: #0d47a1; }
+            100% { border-color: #2962ff; }
+        }
+
+        th.sortable:hover {
+            cursor: pointer;
+            text-decoration: underline;
+            color: #2962ff;
+            transition: color 0.3s ease-in-out;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .fade-in {
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .slide-down {
+            animation: slideDown 0.5s ease-in-out;
+        }
+
+        .table-hover tbody tr:hover {
+            background-color: #f1f1f1;
+            transform: scale(1.02);
+            transition: all 0.3s ease-in-out;
+        }
+
+        .loading-spinner {
+            display: none;
+            margin: 50px auto;
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 16px solid #3498db;
+            width: 120px;
+            height: 120px;
+            -webkit-animation: spin 2s linear infinite; /* Safari */
+            animation: spin 2s linear infinite;
+        }
+
+        @-webkit-keyframes spin {
+            0% { -webkit-transform: rotate(0deg); }
+            100% { -webkit-transform: rotate(360deg); }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .tooltip-inner {
+            background-color: #0d47a1;
+            color: #fff;
+        }
+
+        .tooltip-arrow {
+            border-top-color: #0d47a1 !important;
+        }
+
+        .feedback-message {
+            display: none;
+            margin-top: 10px;
+            color: green;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -49,28 +139,31 @@
     <div class="container p-1 mt-12">
         <div class="row justify-content-center">
             <div class="col-md-12 row-12">
-                <div class="card">
+                <div class="card slide-down">
                     <div class="card-header">
                         <br>
-                        <input type="text" id="searchInput" placeholder="Buscar..." class="form-control">
-                        <button id="searchButton" class="btn btn-primary mt-2">Buscar</button>
-                        <button id="downloadButton" class="btn btn-secondary mt-2">Descargar</button>
+                        <input type="text" id="searchInput" placeholder="Buscar..." class="form-control fade-in" data-bs-toggle="tooltip" data-bs-placement="top" title="Buscar en la tabla">
+                        <button id="searchButton" class="btn btn-primary mt-2 fade-in" data-bs-toggle="tooltip" data-bs-placement="top" title="Realizar búsqueda">Buscar</button>
+                        <button id="resetButton" class="btn btn-warning mt-2 fade-in" data-bs-toggle="tooltip" data-bs-placement="top" title="Restablecer búsqueda">Restablecer</button>
+                        <button id="downloadButton" class="btn btn-secondary mt-2 fade-in" data-bs-toggle="tooltip" data-bs-placement="top" title="Descargar datos filtrados">Descargar</button>
+                        <div class="feedback-message" id="feedbackMessage"></div>
                         <br><br>
-                        <table class="table table-hover">
+                        <div class="loading-spinner" id="loadingSpinner"></div>
+                        <table class="table table-hover fade-in">
                             <thead>
                                 <tr>
-                                    <th>Folio</th>
-                                    <th>Nombre del propietario</th>
-                                    <th>Dirección</th>
-                                    <th>Localidad</th>
-                                    <th>Ubicación</th>
-                                    <th>Tipo de trámite</th>
-                                    <th>Fecha de ingreso</th>
-                                    <th>Nombre del solicitante</th>
-                                    <th>Teléfono</th>
-                                    <th>Correo</th>
-                                    <th>Usuario que recibe</th>
-                                    <th>Comentarios</th>
+                                    <th class="sortable" data-bs-toggle="tooltip" data-bs-placement="top" title="Ordenar por Folio">Folio</th>
+                                    <th class="sortable" data-bs-toggle="tooltip" data-bs-placement="top" title="Ordenar por Nombre del propietario">Nombre del propietario</th>
+                                    <th class="sortable" data-bs-toggle="tooltip" data-bs-placement="top" title="Ordenar por Dirección">Dirección</th>
+                                    <th class="sortable" data-bs-toggle="tooltip" data-bs-placement="top" title="Ordenar por Localidad">Localidad</th>
+                                    <th class="sortable" data-bs-toggle="tooltip" data-bs-placement="top" title="Ordenar por Ubicación">Ubicación</th>
+                                    <th class="sortable" data-bs-toggle="tooltip" data-bs-placement="top" title="Ordenar por Tipo de trámite">Tipo de trámite</th>
+                                    <th class="sortable" data-bs-toggle="tooltip" data-bs-placement="top" title="Ordenar por Fecha de ingreso">Fecha de ingreso</th>
+                                    <th class="sortable" data-bs-toggle="tooltip" data-bs-placement="top" title="Ordenar por Nombre del solicitante">Nombre del solicitante</th>
+                                    <th class="sortable" data-bs-toggle="tooltip" data-bs-placement="top" title="Ordenar por Teléfono">Teléfono</th>
+                                    <th class="sortable" data-bs-toggle="tooltip" data-bs-placement="top" title="Ordenar por Correo">Correo</th>
+                                    <th class="sortable" data-bs-toggle="tooltip" data-bs-placement="top" title="Ordenar por Usuario que recibe">Usuario que recibe</th>
+                                    <th class="sortable" data-bs-toggle="tooltip" data-bs-placement="top" title="Ordenar por Comentarios">Comentarios</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -81,7 +174,7 @@
                                     $result = mysqli_query($conexion, $sql);
                                     if (mysqli_num_rows($result) > 0) {
                                         while ($mostrar = mysqli_fetch_array($result)) { ?>
-                                            <tr>
+                                            <tr class="fade-in">
                                                 <td><?php echo $mostrar['folio'] ?></td>
                                                 <td><?php echo $mostrar['nombre_propietario'] ?></td>
                                                 <td><?php echo $mostrar['direccion'] ?></td>
@@ -112,7 +205,16 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script>
-            $(document).ready(function() {
+        $(document).ready(function() {
+            $('[data-bs-toggle="tooltip"]').tooltip();
+
+            // Mostrar spinner de carga
+            $('#loadingSpinner').show();
+            setTimeout(function() {
+                $('#loadingSpinner').hide();
+            }, 2000);
+
+            // Función de búsqueda
             $('#searchButton').click(function() {
                 var searchText = $('#searchInput').val().toLowerCase();
                 $('table tbody tr').each(function() {
@@ -129,8 +231,17 @@
                         $(this).hide();
                     }
                 });
+                $('#feedbackMessage').text('Búsqueda completada').fadeIn().delay(2000).fadeOut();
             });
 
+            // Función de reset
+            $('#resetButton').click(function() {
+                $('#searchInput').val('');
+                $('table tbody tr').show();
+                $('#feedbackMessage').text('Búsqueda restablecida').fadeIn().delay(2000).fadeOut();
+            });
+
+            // Función de descarga
             $('#downloadButton').click(function() {
                 var wb = XLSX.utils.book_new();
                 var ws_data = [];
@@ -155,7 +266,33 @@
 
                 var filename = "reporte_" + formattedDate + ".xlsx";
                 XLSX.writeFile(wb, filename);
+
+                $('#feedbackMessage').text('Descarga completada').fadeIn().delay(2000).fadeOut();
             });
+
+            // Función de ordenamiento
+            $('.sortable').click(function() {
+                var table = $(this).parents('table').eq(0);
+                var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()));
+                this.asc = !this.asc;
+                if (!this.asc) {
+                    rows = rows.reverse();
+                }
+                for (var i = 0; i < rows.length; i++) {
+                    table.append(rows[i]);
+                }
+            });
+
+            function comparer(index) {
+                return function(a, b) {
+                    var valA = getCellValue(a, index), valB = getCellValue(b, index);
+                    return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.localeCompare(valB);
+                };
+            }
+
+            function getCellValue(row, index) {
+                return $(row).children('td').eq(index).text();
+            }
         });
     </script>
 </body>
