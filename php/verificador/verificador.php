@@ -1,3 +1,8 @@
+<?php
+include('../conection.php');
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,45 +13,31 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <style>
-        body {
-            background-color: #f0f8ff;
+        .spinner-border {
+            display: none;
         }
-
-        .card {
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 10px 20px rgba(100, 205, 255, 0.5);
-            background-color: rgba(255, 255, 255, 0.8);
-            padding: 15px;
+        .collapse-toggle {
+            cursor: pointer;
         }
-
-        .card-header {
-            background-color: #0d47a1;
-            color: #fff;
-            border-radius: 15px 15px 0 0;
-            padding: 10px 15px;
+        .details-row {
+            padding: 15px 0;
         }
-
-        .modal-header {
-            background-color: #0d47a1;
-            color: #fff;
-            border-radius: 15px 15px 0 0;
-            padding: 10px 15px;
-        }
-
         .btn-primary {
-            background-color: #0d47a1;
-            border-color: #0d47a1;
+            background-color: #0056b3;
+            border-color: #004494;
         }
-
         .btn-primary:hover {
-            background-color: #2962ff;
-            border-color: #2962ff;
+            background-color: #004494;
+            border-color: #003366;
         }
-
-        .table th,
-        .table td {
+        .table th, .table td {
             vertical-align: middle;
+        }
+        .modal-content {
+            border-radius: 10px;
+        }
+        .alert {
+            display: none;
         }
     </style>
 </head>
@@ -55,102 +46,140 @@
 
     <?php include ('navbar.php')?>
 
-    <div class="container p-1 mt-12">
-        <div class="row justify-content-center">
-            <div class="col-md-12 row-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h4 class="mb-0">Registro de Actividades</h4>
+    <div class="container mt-5">
+        <h2>Registros en Estatus de Verificador</h2>
+        <div id="alert-message" class="alert"></div>
+        <table class="table table-bordered table-hover">
+            <thead class="table-info">
+                <tr>
+                    <th>Folio</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Acciones</th>
+                    <th>Detalles</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php while ($row = $result->fetch_assoc()): ?>
+                    <tr>
+                        <td><?php echo $row['folio']; ?></td>
+                        <td><?php echo $row['nombre_propietario']; ?></td>
+                        <td><?php echo $row['direccion']; ?></td>
+                        <td>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modal-<?php echo $row['folio']; ?>">
+                                Agregar Observaciones
+                            </button>
+                        </td>
+                        <td>
+                            <span class="collapse-toggle" data-bs-toggle="collapse" data-bs-target="#details-<?php echo $row['folio']; ?>" aria-expanded="false" aria-controls="details-<?php echo $row['folio']; ?>">
+                                &#9660; <!-- Flecha hacia abajo -->
+                            </span>
+                        </td>
+                    </tr>
+                    <tr class="collapse details-row" id="details-<?php echo $row['folio']; ?>">
+                        <td colspan="5">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <strong>Detalles adicionales:</strong>
+                                        <p>Folio: <?php echo $row['folio']; ?></p>
+                                        <p>Nombre Propietario: <?php echo $row['nombre_propietario']; ?></p>
+                                        <p>Dirección: <?php echo $row['direccion']; ?></p>
+                                        <p>Localidad: <?php echo $row['localidad']; ?></p>
+                                        <p>Tipo de Trámite: <?php echo $row['tipo_tramite']; ?></p>
+                                        <p>Fecha de Ingreso: <?php echo $row['fecha_ingreso']; ?></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p>Nombre del Solicitante: <?php echo $row['nombre_solicitante']; ?></p>
+                                        <p>Teléfono: <?php echo $row['telefono']; ?></p>
+                                        <p>Correo: <?php echo $row['correo']; ?></p>
+                                        <p>Usuario que Recibe: <?php echo $row['usuario_recibe']; ?></p>
+                                        <p>Observaciones: <?php echo $row['observaciones']; ?></p>
+                                        <p>Fecha de Entrega Estimada: <?php echo $row['fecha_entrega_estimada']; ?></p>
+                                        <p>Estatus: <?php echo $row['estatus']; ?></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="modal-<?php echo $row['folio']; ?>" tabindex="-1" aria-labelledby="modalLabel-<?php echo $row['folio']; ?>" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="modalLabel-<?php echo $row['folio']; ?>">Agregar Observaciones</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form class="observaciones-form" data-folio="<?php echo $row['folio']; ?>" enctype="multipart/form-data">
+                                        <input type="hidden" name="folio" value="<?php echo $row['folio']; ?>">
+                                        <div class="mb-3">
+                                            <label for="comentarios-<?php echo $row['folio']; ?>" class="form-label">Comentarios</label>
+                                            <textarea class="form-control" id="comentarios-<?php echo $row['folio']; ?>" name="comentarios" rows="3" required></textarea>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="imagen-<?php echo $row['folio']; ?>" class="form-label">Subir Imagen</label>
+                                            <input class="form-control" type="file" id="imagen-<?php echo $row['folio']; ?>" name="imagen" accept="image/*" required>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Guardar</button>
+                                        <div class="spinner-border text-primary" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <table class="table table-striped table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Folio</th>
-                                    <th>Nombre del Propietario</th>
-                                    <th>Dirección</th>
-                                    <th>Localidad</th>
-                                    <th>Tipo de Trámite</th>
-                                    <th>Fecha de Ingreso</th>
-                                    <th>Teléfono</th>
-                                    <th>Comentarios</th>
-                                    <th>Verificar</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                    // Consultar registros en la tabla formulario
-                                    include('../conection.php');
-                                    $conexion = connection();
-                                    $sql = "SELECT * FROM formulario";
-                                    $result = mysqli_query($conexion, $sql);
-                                    if (mysqli_num_rows($result) > 0) {
-                                        while ($mostrar = mysqli_fetch_array($result)) { ?>
-                                            <tr>
-                                                <td><?php echo $mostrar['folio'] ?></td>
-                                                <td><?php echo $mostrar['nombre_propietario'] ?></td>
-                                                <td><?php echo $mostrar['direccion'] ?></td>
-                                                <td><?php echo $mostrar['localidad'] ?></td>
-                                                <td><?php echo $mostrar['tipo_tramite'] ?></td>
-                                                <td><?php echo $mostrar['fecha_ingreso'] ?></td>
-                                                <td><?php echo $mostrar['telefono'] ?></td>
-                                                <td><?php echo $mostrar['observaciones'] ?></td>
-                                                <td>
-                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#verificarModal<?php echo $mostrar['folio'] ?>">Verificar</button>
-                                                </td>
-                                            </tr>
-                                            <!-- Modal -->
-                                            <div class="modal fade" id="verificarModal<?php echo $mostrar['folio'] ?>" tabindex="-1" aria-labelledby="verificarModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="verificarModalLabel">Verificar</h5>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <form action="verificar.php" method="post">
-                                                                <div class="mb-3">
-                                                                    <label for="verificarInput" class="form-label">Campo de Verificación</label>
-                                                                    <input type="text" class="form-control" id="verificarInput" name="verificarInput" placeholder="Ingrese el dato">
-                                                                </div>
-                                                                <div class="mb-3">
-                                                                    <label for="coordenadas" class="form-label">Coordenadas</label>
-                                                                    <input type="text" class="form-control" id="coordenadas" name="coordenadas" placeholder="Ingrese las coordenadas">
-                                                                </div>
-                                                                <div class="mb-3">
-                                                                    <label for="ubicacion_geologica" class="form-label">Ubicación Geológica</label>
-                                                                    <input type="text" class="form-control" id="ubicacion_geologica" name="ubicacion_geologica" placeholder="Ingrese la ubicación geológica">
-                                                                </div>
-                                                                <div class="mb-3">
-                                                                    <label for="imagenReferencia" class="form-label">Imagen de Referencia</label>
-                                                                    <input type="text" class="form-control" id="imagenReferencia" name="imagenReferencia" placeholder="Ingrese la URL de la imagen de referencia">
-                                                                </div>
-                                                                <div class="mb-3">
-                                                                    <label for="estatus" class="form-label">Estatus</label>
-                                                                    <input type="text" class="form-control" id="estatus" name="estatus" placeholder="Ingrese el estatus">
-                                                                </div>
-                                                                <input type="hidden" name="folio" value="<?php echo $mostrar['folio'] ?>">
-                                                                <button type="submit" class="btn btn-primary">Verificar</button>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        <?php }
-                                    } else {
-                                        echo "<tr><td colspan='9'>No hay registros</td></tr>";
-                                    }
-                                ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
+                <?php endwhile; ?>
+            </tbody>
+        </table>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('.observaciones-form').on('submit', function(e){
+                e.preventDefault();
+                var form = $(this);
+                var formData = new FormData(this);
+                var spinner = form.find('.spinner-border');
+                var alertMessage = $('#alert-message');
+                
+                spinner.show();
+                
+                $.ajax({
+                    url: 'procesar_observaciones.php',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response){
+                        spinner.hide();
+                        alertMessage.removeClass('d-none alert-danger').addClass('alert-success').text('Observaciones guardadas exitosamente.');
+                        setTimeout(function(){
+                            alertMessage.addClass('d-none');
+                        }, 3000);
+                        form.closest('.modal').modal('hide');
+                    },
+                    error: function(){
+                        spinner.hide();
+                        alertMessage.removeClass('d-none alert-success').addClass('alert-danger').text('Error al guardar observaciones.');
+                        setTimeout(function(){
+                            alertMessage.addClass('d-none');
+                        }, 3000);
+                    }
+                });
+            });
+
+            // Cambia el ícono de la flecha cuando se colapsa o se expande
+            $('.collapse-toggle').on('click', function() {
+                $(this).html($(this).html() == '&#9660;' ? '&#9650;' : '&#9660;');
+            });
+        });
+    </script>
+
 </body>
 
 </html>

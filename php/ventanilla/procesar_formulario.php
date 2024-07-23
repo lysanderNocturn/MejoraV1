@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Preparar la consulta SQL para insertar los datos en la base de datos
     $sql = "INSERT INTO formulario (folio, nombre_propietario, direccion, localidad, tipo_tramite, fecha_ingreso, nombre_solicitante, telefono, correo, usuario_recibe, observaciones, fecha_entrega_estimada, estatus) 
-            VALUES (folio(), '$nombre', '$direccion', '$localidad', '$tipoTramite', '$fecha_ingreso', '$nombre_solicitante', '$telefono', '$correo', '$usuario', '$observaciones', '$fecha_entrega_estimada', 'verificador')";
+            VALUES (folio(), '$nombre', '$direccion', '$localidad', '$tipoTramite', '$fecha_ingreso', '$nombre_solicitante', '$telefono', '$correo', '$usuario', '$observaciones', '$fecha_entrega_estimada', 'ventanilla')";
 
     // Ejecutar la consulta
     // deepcode ignore Sqli: <please specify a reason of ignoring this>

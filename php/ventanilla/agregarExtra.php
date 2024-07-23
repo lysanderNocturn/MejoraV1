@@ -10,7 +10,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Aquí puedes manejar la imagen si necesitas guardarla en la base de datos o en el servidor.
 
     // Preparar la consulta SQL para actualizar la base de datos
-    $sql = "UPDATE formulario SET ubicacion = '$ubicacion' WHERE folio = '$folio'";
+    $sql = "UPDATE formulario SET ubicacion = '$ubicacion', estatus = 'verificador' WHERE folio = '$folio'";
+
 
 
     // Obtener una conexión nueva
