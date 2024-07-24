@@ -26,7 +26,7 @@ if (!isset($_SESSION["username"])) {
           <a class="nav-link" href="verificador.php">Seguimiento de tramites</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="consultarDireccion.php">Consultar direccion</a>
+          <a class="nav-link" href="direccion.php">Consultar direccion</a>
     
         </li>
           <a class="nav-link" href="PerfilV.php">usuario: <?php echo $username; ?></a>
