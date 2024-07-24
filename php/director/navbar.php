@@ -47,7 +47,7 @@ if (!isset($_SESSION["username"])) {
 </head>
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <div class="container">
-    <a class="navbar-brand" href="ventanilla.php">Planeación</a>
+    <a class="navbar-brand" href="#">Planeación</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -55,16 +55,16 @@ if (!isset($_SESSION["username"])) {
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ml-auto"> <!-- Agregamos la clase ml-auto aquí -->
         <li class="nav-item">
-          <a class="nav-link" href="ventanilla.php">Movimientos realizados</a>
+          <a class="nav-link" href="#">Movimientos realizados</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="registros.php">actividad de usuarios</a>
+          <a class="nav-link" href="#">actividad de usuarios</a>
     
         <li class="nav-item">
-          <a class="nav-link" href="extra.php">Agregar usuario</a>
+          <a class="nav-link" href="nwusuario.php">Agregar usuario</a>
         </li>
         </li>
-          <a class="nav-link" href="PerfilV.php">usuario: <?php echo $username; ?></a>
+          <a class="nav-link" href="#">usuario: <?php echo $username; ?></a>
         </li>
       </ul>
       <ul class="navbar-nav"> <!-- Lista separada para "Cerrar sesión" -->

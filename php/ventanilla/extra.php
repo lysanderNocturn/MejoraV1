@@ -200,9 +200,6 @@
       }
     }
 
-    // Ejemplo de añadir un marcador personalizado
-    addCustomMarker(22.22662, -102.32547, 'Mi marcador personalizado', 'Este es un marcador añadido manualmente.');
-
     // Función para medir distancias entre puntos
     var measureControl = L.control.measure({
       position: 'topleft',
