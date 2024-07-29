@@ -11,6 +11,7 @@
         body {
             background-color: #f0f8ff;
             animation: backgroundFade 3s infinite alternate;
+            margin-left: 250px; /* Margen para el contenido principal */
         }
 
         @keyframes backgroundFade {
@@ -69,7 +70,6 @@
             transition: color 0.3s ease-in-out;
         }
 
-        /* Animations */
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -88,6 +88,14 @@
             animation: slideDown 0.5s ease-in-out;
         }
 
+        .table {
+            font-size: 0.85rem; /* Ajusta el tamaño de la fuente */
+        }
+
+        .table td, .table th {
+            padding: 0.5rem; /* Reduce el padding */
+        }
+
         .table-hover tbody tr:hover {
             background-color: #f1f1f1;
             transform: scale(1.02);
@@ -102,7 +110,7 @@
             border-top: 16px solid #3498db;
             width: 120px;
             height: 120px;
-            -webkit-animation: spin 2s linear infinite; /* Safari */
+            -webkit-animation: spin 2s linear infinite;
             animation: spin 2s linear infinite;
         }
 
@@ -134,21 +142,18 @@
     </style>
 </head>
 <body>
-    <?php include ('navVentana.php')?>
+    <?php include ('navVentana.php') ?>
 
     <div class="container p-1 mt-12">
         <div class="row justify-content-center">
-            <div class="col-md-12 row-12">
+            <div class="col-md-12">
                 <div class="card slide-down">
                     <div class="card-header">
-                        <br>
                         <input type="text" id="searchInput" placeholder="Buscar..." class="form-control fade-in" data-bs-toggle="tooltip" data-bs-placement="top" title="Buscar en la tabla">
                         <button id="searchButton" class="btn btn-primary mt-2 fade-in" data-bs-toggle="tooltip" data-bs-placement="top" title="Realizar búsqueda">Buscar</button>
                         <button id="resetButton" class="btn btn-warning mt-2 fade-in" data-bs-toggle="tooltip" data-bs-placement="top" title="Restablecer búsqueda">Restablecer</button>
                         <button id="downloadButton" class="btn btn-secondary mt-2 fade-in" data-bs-toggle="tooltip" data-bs-placement="top" title="Descargar datos filtrados">Descargar</button>
                         <div class="feedback-message" id="feedbackMessage"></div>
-                        <br><br>
-                        <div class="loading-spinner" id="loadingSpinner"></div>
                         <table class="table table-hover fade-in">
                             <thead>
                                 <tr>
@@ -208,50 +213,28 @@
         $(document).ready(function() {
             $('[data-bs-toggle="tooltip"]').tooltip();
 
-            // Mostrar spinner de carga
-            $('#loadingSpinner').show();
-            setTimeout(function() {
-                $('#loadingSpinner').hide();
-            }, 2000);
-
-            // Función de búsqueda
             $('#searchButton').click(function() {
                 var searchText = $('#searchInput').val().toLowerCase();
                 $('table tbody tr').each(function() {
-                    var found = false;
-                    $(this).each(function() {
-                        if ($(this).text().toLowerCase().indexOf(searchText) !== -1) {
-                            found = true;
-                            return false;
-                        }
-                    });
-                    if (found) {
-                        $(this).show();
-                    } else {
-                        $(this).hide();
-                    }
+                    var found = $(this).text().toLowerCase().indexOf(searchText) !== -1;
+                    $(this).toggle(found);
                 });
                 $('#feedbackMessage').text('Búsqueda completada').fadeIn().delay(2000).fadeOut();
             });
 
-            // Función de reset
             $('#resetButton').click(function() {
                 $('#searchInput').val('');
                 $('table tbody tr').show();
                 $('#feedbackMessage').text('Búsqueda restablecida').fadeIn().delay(2000).fadeOut();
             });
 
-            // Función de descarga
             $('#downloadButton').click(function() {
                 var wb = XLSX.utils.book_new();
                 var ws_data = [];
-                var rows = $('table tr:visible');
-
-                rows.each(function(index) {
+                $('table tr:visible').each(function() {
                     var row = [];
                     $(this).find('th, td').each(function() {
-                        var cellText = $(this).text().trim();
-                        row.push(cellText === "" ? "NULL" : cellText);
+                        row.push($(this).text().trim() || "NULL");
                     });
                     ws_data.push(row);
                 });
@@ -260,39 +243,35 @@
                 XLSX.utils.book_append_sheet(wb, ws, "Datos Filtrados");
 
                 var date = new Date();
-                var formattedDate = date.getFullYear() + "-" +
-                    ("0" + (date.getMonth() + 1)).slice(-2) + "-" +
-                    ("0" + date.getDate()).slice(-2);
+                var formattedDate = `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-${("0" + date.getDate()).slice(-2)}`;
+                var filename = `reporte_${formattedDate}.xlsx`;
 
-                var filename = "reporte_" + formattedDate + ".xlsx";
                 XLSX.writeFile(wb, filename);
-
                 $('#feedbackMessage').text('Descarga completada').fadeIn().delay(2000).fadeOut();
             });
 
-            // Función de ordenamiento
             $('.sortable').click(function() {
-                var table = $(this).parents('table').eq(0);
-                var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()));
-                this.asc = !this.asc;
-                if (!this.asc) {
-                    rows = rows.reverse();
-                }
-                for (var i = 0; i < rows.length; i++) {
-                    table.append(rows[i]);
-                }
-            });
+                var index = $(this).index();
+                var table = $(this).closest('table');
+                var rows = table.find('tbody tr').get();
 
-            function comparer(index) {
-                return function(a, b) {
-                    var valA = getCellValue(a, index), valB = getCellValue(b, index);
+                rows.sort(function(a, b) {
+                    var valA = $(a).children('td').eq(index).text().toLowerCase();
+                    var valB = $(b).children('td').eq(index).text().toLowerCase();
                     return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.localeCompare(valB);
-                };
-            }
+                });
 
-            function getCellValue(row, index) {
-                return $(row).children('td').eq(index).text();
-            }
+                if ($(this).hasClass('asc')) {
+                    rows.reverse();
+                    $(this).removeClass('asc').addClass('desc');
+                } else {
+                    $(this).removeClass('desc').addClass('asc');
+                }
+
+                $.each(rows, function(index, row) {
+                    table.children('tbody').append(row);
+                });
+            });
         });
     </script>
 </body>

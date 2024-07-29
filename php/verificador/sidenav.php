@@ -1,31 +1,3 @@
-<?php
-// Iniciar la sesión
-session_start();
-
-$username = $_SESSION["username"];
-
-
-
-// Verificar si la variable de sesión 'username' está establecida
-if (!isset($_SESSION["username"])) {
-    // No hay una sesión iniciada, redirigir al usuario a la página de inicio
-    header("Location: ../../index.php");
-    exit(); // Finalizar el script para evitar que se ejecute más código
-}
-?>
-
-<div class="sidebar">
-        <div class="user-info">
-            <h3>Usuario: <?php echo htmlspecialchars($username); ?></h3>
-        </div>
-        <hr>
-        <a href="ventanilla.php">Inicio</a>
-        <a href="registros.php">Registros</a>
-        <a href="extra.php">Añadir datos</a>
-        <a href="#">Notificaciones</a>
-        <a href="../cerrar_sesion.php">Cerrar sesion</a>      
-</div>
-
 <style>
         body {
             background-color: #f0f2f5;
@@ -71,6 +43,12 @@ if (!isset($_SESSION["username"])) {
         }
     </style>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
+<div class="sidebar">
+        <div class="user-info">
+            <h3>Usuario: <?php echo htmlspecialchars($username); ?></h3>
+        </div>
+        <a href="verificador.php">Inicio</a>
+        <a href="direccion.php">Direcciones</a>
+        <a href="#">Notificaciones</a>
+        <a href="../cerrar_sesion.php">Cerrar sesion</a>      
+</div>

@@ -17,85 +17,91 @@
       height: 400px;
       width: 100%;
     }
-
     #imagen-preview {
       max-width: 100%;
       margin-top: 10px;
       display: none;
     }
-
     .leaflet-popup-content-wrapper {
       padding: 10px;
     }
-
     .leaflet-popup-content {
       max-height: 300px;
       overflow-y: auto;
+    }
+    .card {
+      margin-bottom: 1.5rem;
     }
   </style>
 </head>
 
 <body>
-  <?php include('navVentana.php'); ?>
 
-  <div class="container p-3 mt-3">
-    <div class="row justify-content-center">
-      <div class="col-md-8">
-        <div class="card">
-          <div class="card-header">
-            <h5>Completar Información</h5>
-          </div>
-          <div class="card-body">
-            <form id="formulario" action="agregarExtra.php" method="post" enctype="multipart/form-data">
-              <!-- Campo de selección de folio -->
-              <div class="mb-3">
-                <label for="folio" class="form-label">Folio</label>
-                <select class="form-select" id="folio" name="folio" required>
-                  <option value="" selected disabled>Selecciona un folio</option>
-                  <?php
-                  include('../conection.php');
-                  while($row = $result->fetch_assoc()) {
-                      echo "<option value='" . $row["folio"] . "'>" . $row["folio"] . "</option>";
-                  }
-                  ?>
-                </select>
-              </div>
+    <?php
+    include('navVentana.php')
+    ?>
 
-              <!-- Campo de ubicación geográfica -->
-              <div class="mb-3">
-                <label for="ubicacion" class="form-label">Ubicación Geográfica</label>
-                <input type="text" class="form-control" id="ubicacion" name="ubicacion" placeholder="Escribe la ubicación o selecciona en el mapa" required readonly>
-              </div>
+  <!-- Main Content -->
+  <div class="content">
+    <div class="container p-3 mt-3">
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <div class="card">
+            <div class="card-header">
+              <h5>Completar Información</h5>
+            </div>
+            <div class="card-body">
+              <form id="formulario" action="agregarExtra.php" method="post" enctype="multipart/form-data">
+                <!-- Campo de selección de folio -->
+                <div class="mb-3">
+                  <label for="folio" class="form-label">Folio</label>
+                  <select class="form-select" id="folio" name="folio" required>
+                    <option value="" selected disabled>Selecciona un folio</option>
+                    <?php
+                    include('../conection.php');
+                    while($row = $result->fetch_assoc()) {
+                        echo "<option value='" . $row["folio"] . "'>" . $row["folio"] . "</option>";
+                    }
+                    ?>
+                  </select>
+                </div>
 
-              <!-- Campos para subir archivos -->
-              <div class="mb-3">
-                <label for="escrituras" class="form-label">Escrituras del Inmueble</label>
-                <input type="file" class="form-control" id="escrituras" name="escrituras" accept="image/*">
-              </div>
+                <!-- Campo de ubicación geográfica -->
+                <div class="mb-3">
+                  <label for="ubicacion" class="form-label">Ubicación Geográfica</label>
+                  <input type="text" class="form-control" id="ubicacion" name="ubicacion" placeholder="Escribe la ubicación o selecciona en el mapa" required readonly>
+                </div>
 
-              <div class="mb-3">
-                <label for="boleta-predial" class="form-label">Boleta del Predial</label>
-                <input type="file" class="form-control" id="boleta-predial" name="boleta-predial" accept="image/*">
-              </div>
+                <!-- Campos para subir archivos -->
+                <div class="mb-3">
+                  <label for="escrituras" class="form-label">Escrituras del Inmueble</label>
+                  <input type="file" class="form-control" id="escrituras" name="escrituras" accept="image/*">
+                </div>
 
-              <div class="mb-3">
-                <label for="identificacion" class="form-label">Identificación Oficial</label>
-                <input type="file" class="form-control" id="identificacion" name="identificacion" accept="image/*">
-              </div>
+                <div class="mb-3">
+                  <label for="boleta-predial" class="form-label">Boleta del Predial</label>
+                  <input type="file" class="form-control" id="boleta-predial" name="boleta-predial" accept="image/*">
+                </div>
 
-              <button type="submit" class="btn btn-primary">Enviar a verificar</button>
-              <div id="mensaje-envio" style="margin-top: 10px; display: none;"></div>
-            </form>
+                <div class="mb-3">
+                  <label for="identificacion" class="form-label">Identificación Oficial</label>
+                  <input type="file" class="form-control" id="identificacion" name="identificacion" accept="image/*">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Enviar a verificar</button>
+                <div id="mensaje-envio" style="margin-top: 10px; display: none;"></div>
+              </form>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- Sección del mapa interactivo -->
-    <div class="row justify-content-center mt-4">
-      <div class="col-md-10">
-        <h2 class="text-center mb-4">Mapa Interactivo</h2>
-        <div id="map"></div>
+      <!-- Sección del mapa interactivo -->
+      <div class="row justify-content-center mt-4">
+        <div class="col-md-10">
+          <h2 class="text-center mb-4">Mapa Interactivo</h2>
+          <div id="map"></div>
+        </div>
       </div>
     </div>
   </div>

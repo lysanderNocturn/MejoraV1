@@ -9,6 +9,41 @@
     <link rel="stylesheet" href="../../css/ventanilla.css">
     
     <style>
+        body {
+            background-color: #f0f2f5;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        .sidebar {
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 250px;
+            background-color: #6176A6;
+            padding-top: 1rem;
+            color: #fff;
+            z-index: 1000;
+        }
+        .sidebar h3 {
+            padding-left: 1rem;
+        }
+        .sidebar a {
+            color: #fff;
+            padding: 10px 15px;
+            text-decoration: none;
+            display: block;
+        }
+        .sidebar a:hover {
+            background-color: #333E55;
+        }
+        .content {
+            margin-left: 250px;
+            padding: 2rem;
+            width: calc(100% - 250px);
+        }
         .card {
             border: none;
             border-radius: 15px;
@@ -19,21 +54,17 @@
             padding: 15px;
             transition: all 0.3s ease-in-out;
         }
-
         .card:hover {
             transform: scale(1.0005);
         }
-
         .form-group label {
             font-weight: bold;
         }
-
         .btn-primary {
             background-color: #0d47a1;
             border-color: #0d47a1;
             transition: all 0.3s ease-in-out;
         }
-
         .btn-primary:hover {
             background-color: #2962ff;
             border-color: #2962ff;
@@ -41,94 +72,96 @@
     </style>
 </head>
 <body>
-    <!-- nav bar -->
+    <!-- Nav bar -->
     <?php include ('navVentana.php')?>
 
-    <form action="procesar_formulario.php" method="post" onsubmit="return validarFormulario()">
-        <div class="container py-5 card p-3">  
-            <h2 class="text-center mb-4">Recepcion en ventanilla</h2>
-            <div class="row justify-content-center">  
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="nombre">Nombre del propietario:</label>
-                        <input type="text" class="form-control" id="nombre" name="nombre" required>
-                        <div class="invalid-feedback">Por favor ingresa su nombre.</div>
+    <div class="content">
+        <form action="procesar_formulario.php" method="post" onsubmit="return validarFormulario()">
+            <div class="container py-5 card p-3">  
+                <h2 class="text-center mb-4">Recepción en ventanilla</h2>
+                <div class="row justify-content-center">  
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="nombre">Nombre del propietario:</label>
+                            <input type="text" class="form-control" id="nombre" name="nombre" required>
+                            <div class="invalid-feedback">Por favor ingresa su nombre.</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="nombre_solicitante">Nombre del solicitante:</label>
+                            <input type="text" class="form-control" id="nombre_solicitante" name="nombre_solicitante" required>
+                            <div class="invalid-feedback">Por favor ingresa el nombre del solicitante.</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="direccion">Dirección:</label>
+                            <input type="text" class="form-control" id="direccion" name="direccion" required>
+                            <div class="invalid-feedback">Por favor ingresa su dirección.</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="localidad">Localidad:</label>
+                            <input type="text" class="form-control" id="localidad" name="localidad" required>
+                            <div class="invalid-feedback">Por favor ingresa su localidad.</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="tipoTramite">Tipo de trámite:</label>
+                            <select class="form-control" id="tipoTramite" name="tipoTramite" required>
+                                <option value="" selected disabled>Seleccionar</option>
+                                <option value="Constancia">Constancia</option>
+                                <option value="Uso de Suelo">Uso de Suelo</option>
+                                <option value="Subdivisión">Subdivisión</option>
+                                <option value="Número oficial">Número oficial</option>
+                            </select>
+                            <div class="invalid-feedback">Por favor selecciona el tipo de trámite.</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="correo">Correo:</label>
+                            <input type="email" class="form-control" id="correo" name="correo">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="telefono">Teléfono:</label>
+                            <input type="tel" class="form-control" id="telefono" name="telefono" required>
+                            <div class="invalid-feedback">Por favor ingresa su número de teléfono.</div>
+                        </div>
+                    </div>
+                    <?php
+                    // Verifica si el usuario está autenticado
+                    if(isset($_SESSION['username'])) {
+                        $usuario = $_SESSION['username']; // Obtiene el nombre de usuario de la sesión
+                    }
+                    ?>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="usuario">Recibió:</label>
+                            <input type="text" class="form-control" name="usuario" id="usuario" value="<?php echo htmlspecialchars($usuario); ?>" readonly>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="observaciones">Observaciones:</label>
+                            <textarea class="form-control" id="observaciones" name="observaciones" rows="2" required></textarea>
+                            <div class="invalid-feedback">Por favor ingresa alguna observación.</div>
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="nombre_solicitante">Nombre del solicitante:</label>
-                        <input type="text" class="form-control" id="nombre_solicitante" name="nombre_solicitante" required>
-                        <div class="invalid-feedback">Por favor ingresa el nombre del solicitante.</div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="direccion">Dirección:</label>
-                        <input type="text" class="form-control" id="direccion" name="direccion" required>
-                        <div class="invalid-feedback">Por favor ingresa su dirección.</div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="localidad">Localidad:</label>
-                        <input type="text" class="form-control" id="localidad" name="localidad" required>
-                        <div class="invalid-feedback">Por favor ingresa su localidad.</div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="tipoTramite">Tipo de trámite:</label>
-                        <select class="form-control" id="tipoTramite" name="tipoTramite" required>
-                            <option value="" selected disabled>Seleccionar</option>
-                            <option value="Constancia">Constancia</option>
-                            <option value="Uso de Suelo">Uso de Suelo</option>
-                            <option value="Subdivisión">Subdivisión</option>
-                            <option value="Número oficial">Número oficial</option>
-                        </select>
-                        <div class="invalid-feedback">Por favor selecciona el tipo de trámite.</div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="correo">Correo:</label>
-                        <input type="email" class="form-control" id="correo" name="correo">
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="telefono">Teléfono:</label>
-                        <input type="tel" class="form-control" id="telefono" name="telefono" required>
-                        <div class="invalid-feedback">Por favor ingresa su número de teléfono.</div>
-                    </div>
-                </div>
-                <?php
-                // Verifica si el usuario está autenticado
-                if(isset($_SESSION['username'])) {
-                    $usuario = $_SESSION['username']; // Obtiene el nombre de usuario de la sesión
-                }
-                ?>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="usuario">Recibió:</label>
-                        <input type="text" class="form-control" name="usuario" id="usuario" value="<?php echo $usuario; ?>" readonly>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label for="observaciones">Observaciones:</label>
-                        <textarea class="form-control" id="observaciones" name="observaciones" rows="2" required></textarea>
-                        <div class="invalid-feedback">Por favor ingresa alguna observación.</div>
+                <div class="row justify-content-center p-2">
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-primary">Enviar</button>
                     </div>
                 </div>
             </div>
-            <div class="row justify-content-center p-2">
-                <div class="col-md-12">
-                    <button type="submit" class="btn btn-primary">Enviar</button>
-                </div>
-            </div>
-        </div>
-    </form>
+        </form>
+    </div>
 
     <script>
         function transformarDatos() {
