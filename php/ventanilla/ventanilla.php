@@ -15,47 +15,25 @@
             margin: 0;
             padding: 0;
             display: flex;
+            justify-content: auto; /* Alinea a la izquierda */
+            align-items: center;
+            min-height: 100vh;
+            padding-left: 100px; /* Añadir un poco de espacio a la izquierda */
         }
-        .sidebar {
-            height: 100vh;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 250px;
-            background-color: #6176A6;
-            padding-top: 1rem;
-            color: #fff;
-            z-index: 1000;
-        }
-        .sidebar h3 {
-            padding-left: 1rem;
-        }
-        .sidebar a {
-            color: #fff;
-            padding: 10px 15px;
-            text-decoration: none;
-            display: block;
-        }
-        .sidebar a:hover {
-            background-color: #333E55;
-        }
-        .content {
-            margin-left: 250px;
-            padding: 2rem;
-            width: calc(100% - 250px);
-        }
+
         .card {
             border: none;
             border-radius: 15px;
             box-shadow: 0 10px 20px rgba(100, 205, 255, 1);
-            background-color: rgba(255, 255, 255, 0.4);
-            margin: auto;
-            margin-top: 30px;
-            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.9);
+            margin: 20px;
+            padding: 20px;
+            width: 100%;
+            max-width: 800px;
             transition: all 0.3s ease-in-out;
         }
         .card:hover {
-            transform: scale(1.0005);
+            transform: scale(1.02);
         }
         .form-group label {
             font-weight: bold;
@@ -69,6 +47,10 @@
             background-color: #2962ff;
             border-color: #2962ff;
         }
+        .invalid-feedback {
+            display: none;
+            color: red;
+        }
     </style>
 </head>
 <body>
@@ -77,9 +59,9 @@
 
     <div class="content">
         <form action="procesar_formulario.php" method="post" onsubmit="return validarFormulario()">
-            <div class="container py-5 card p-3">  
+            <div class="container card">
                 <h2 class="text-center mb-4">Recepción en ventanilla</h2>
-                <div class="row justify-content-center">  
+                <div class="row justify-content-center">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="nombre">Nombre del propietario:</label>
@@ -154,8 +136,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="row justify-content-center p-2">
-                    <div class="col-md-12">
+                <div class="row justify-content-center">
+                    <div class="col-md-12 text-center">
                         <button type="submit" class="btn btn-primary">Enviar</button>
                     </div>
                 </div>

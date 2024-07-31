@@ -1,3 +1,4 @@
+<?php include ('navVentana.php') ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +12,9 @@
         body {
             background-color: #f0f8ff;
             animation: backgroundFade 3s infinite alternate;
-            margin-left: 250px; /* Margen para el contenido principal */
+            margin: 0;
+            padding: 0;
+            font-size: 14px; /* Ajusta el tamaño de la fuente general */
         }
 
         @keyframes backgroundFade {
@@ -21,21 +24,26 @@
 
         .card {
             border: none;
-            border-radius: 15px;
-            box-shadow: 0 10px 20px rgba(100, 205, 255, 1);
-            background-color: rgba(255, 255, 255, 0.5);
-            margin: auto;
-            margin-top: 30px;
-            padding: 15px;
-            transition: all 0.3s ease-in-out;
+            border-radius: 8px; /* Menor radio para bordes redondeados */
+            box-shadow: 0 4px 8px rgba(100, 205, 255, 0.5); /* Menor sombra */
+            background-color: rgba(255, 255, 255, 0.7);
+            margin-top: 10px; /* Menor margen superior */
+            padding: 8px; /* Menor padding */
+            transition: all 0.3s ease-in-out;          
         }
 
         .card:hover {
-            transform: scale(1.01);
+            transform: scale(1.02);
         }
 
         .form-group label {
             font-weight: bold;
+            font-size: 14px; /* Menor tamaño de fuente */
+        }
+
+        .btn-primary, .btn-secondary {
+            font-size: 14px; /* Menor tamaño de fuente en botones */
+            padding: 4px 8px; /* Menor padding en botones */
         }
 
         .btn-primary {
@@ -56,6 +64,7 @@
 
         .form-control {
             animation: inputPulse 2s infinite alternate;
+            font-size: 14px; /* Menor tamaño de fuente en inputs */
         }
 
         @keyframes inputPulse {
@@ -63,55 +72,39 @@
             100% { border-color: #2962ff; }
         }
 
-        th.sortable:hover {
-            cursor: pointer;
-            text-decoration: underline;
-            color: #2962ff;
-            transition: color 0.3s ease-in-out;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes slideDown {
-            from { transform: translateY(-20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-
-        .fade-in {
-            animation: fadeIn 1s ease-in-out;
-        }
-
-        .slide-down {
-            animation: slideDown 0.5s ease-in-out;
+        .table-responsive {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 8px; /* Menor padding */
         }
 
         .table {
-            font-size: 0.85rem; /* Ajusta el tamaño de la fuente */
+            margin: 8px; /* Menor margen */
+            max-width: 80%; /* Ajusta la anchura máxima */
+            font-size: 12px; /* Menor tamaño de fuente en la tabla */
         }
 
         .table td, .table th {
-            padding: 0.5rem; /* Reduce el padding */
+            padding: .3rem; /* Menor padding en celdas */
         }
 
         .table-hover tbody tr:hover {
             background-color: #f1f1f1;
-            transform: scale(1.02);
+            transform: scale(1.01);
             transition: all 0.3s ease-in-out;
         }
 
         .loading-spinner {
             display: none;
-            margin: 50px auto;
-            border: 16px solid #f3f3f3;
+            margin: 30px auto; /* Menor margen */
+            border: 6px solid #f3f3f3; /* Menor borde */
             border-radius: 50%;
-            border-top: 16px solid #3498db;
-            width: 120px;
-            height: 120px;
-            -webkit-animation: spin 2s linear infinite;
-            animation: spin 2s linear infinite;
+            border-top: 6px solid #3498db; /* Menor borde superior */
+            width: 60px; /* Menor ancho */
+            height: 60px; /* Menor altura */
+            -webkit-animation: spin 1.5s linear infinite; /* Menor velocidad de animación */
+            animation: spin 1.5s linear infinite;
         }
 
         @-webkit-keyframes spin {
@@ -127,6 +120,7 @@
         .tooltip-inner {
             background-color: #0d47a1;
             color: #fff;
+            font-size: 12px; /* Menor tamaño de fuente en tooltips */
         }
 
         .tooltip-arrow {
@@ -135,29 +129,41 @@
 
         .feedback-message {
             display: none;
-            margin-top: 10px;
+            margin-top: 5px; /* Menor margen superior */
             color: green;
             font-weight: bold;
+            font-size: 12px; /* Menor tamaño de fuente */
+        }
+
+        @media (max-width: 768px) {
+            .card {
+                margin: 8px; /* Menor margen en pantallas pequeñas */
+            }
         }
     </style>
 </head>
 <body>
-    <?php include ('navVentana.php') ?>
 
-    <div class="container p-1 mt-12">
-        <div class="row justify-content-center">
-            <div class="col-md-12">
-                <div class="card slide-down">
-                    <div class="card-header">
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-12">
+            <div class="card slide-down">
+                <div class="card-header">
+                    <div class="input-group mb-3">
                         <input type="text" id="searchInput" placeholder="Buscar..." class="form-control fade-in" data-bs-toggle="tooltip" data-bs-placement="top" title="Buscar en la tabla">
-                        <button id="searchButton" class="btn btn-primary mt-2 fade-in" data-bs-toggle="tooltip" data-bs-placement="top" title="Realizar búsqueda">Buscar</button>
-                        <button id="resetButton" class="btn btn-warning mt-2 fade-in" data-bs-toggle="tooltip" data-bs-placement="top" title="Restablecer búsqueda">Restablecer</button>
-                        <button id="downloadButton" class="btn btn-secondary mt-2 fade-in" data-bs-toggle="tooltip" data-bs-placement="top" title="Descargar datos filtrados">Descargar</button>
-                        <div class="feedback-message" id="feedbackMessage"></div>
+                        <button id="searchButton" class="btn btn-primary fade-in" data-bs-toggle="tooltip" data-bs-placement="top" title="Realizar búsqueda">Buscar</button>
+                        <button id="resetButton" class="btn btn-warning fade-in" data-bs-toggle="tooltip" data-bs-placement="top" title="Restablecer búsqueda">Restablecer</button>
+                        <button id="downloadButton" class="btn btn-secondary fade-in" data-bs-toggle="tooltip" data-bs-placement="top" title="Descargar datos filtrados">Descargar</button>
+                    </div>
+                    <div class="feedback-message" id="feedbackMessage"></div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
                         <table class="table table-hover fade-in">
                             <thead>
                                 <tr>
                                     <th class="sortable" data-bs-toggle="tooltip" data-bs-placement="top" title="Ordenar por Folio">Folio</th>
+                                    <!-- Más columnas -->
                                     <th class="sortable" data-bs-toggle="tooltip" data-bs-placement="top" title="Ordenar por Nombre del propietario">Nombre del propietario</th>
                                     <th class="sortable" data-bs-toggle="tooltip" data-bs-placement="top" title="Ordenar por Dirección">Dirección</th>
                                     <th class="sortable" data-bs-toggle="tooltip" data-bs-placement="top" title="Ordenar por Localidad">Localidad</th>
@@ -196,7 +202,7 @@
                                 <?php
                                         }
                                     } else {
-                                        echo "<tr><td colspan='13'>No hay registros</td></tr>";
+                                        echo "<tr><td colspan='12'>No hay registros</td></tr>";
                                     }
                                 ?>
                             </tbody>
