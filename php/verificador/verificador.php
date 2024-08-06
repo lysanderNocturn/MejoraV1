@@ -10,7 +10,7 @@
     <title>Registro de Actividades</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="../../css/globals.css">
-    <link rel="stylesheet" href="../../css/ventanilla.css">
+    
     <style>
         body {
             background-color: #f0f2f5;
@@ -41,7 +41,7 @@
             border-radius: 15px;
             box-shadow: 0 10px 20px rgba(100, 205, 255, 1);
             background-color: rgba(255, 255, 255, 0.4);
-            margin: auto;
+           
             margin-top: 30px;
             padding: 15px;
         }

@@ -160,7 +160,6 @@ $username = htmlspecialchars($_SESSION["username"], ENT_QUOTES, 'UTF-8');
         <!-- Aquí va el contenido principal de la página -->
     </main>
 
-    <button class="toggle-btn" aria-label="Alternar menú lateral">☰</button>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha384-oP7E7XNQRaPbD9xZw6tB6m7XytZ5xnE4vIv9+f3x1v4x7zEowjWp/j9DW/vAB0VB" crossorigin="anonymous" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-KyZXEAg3QhqLMpG8r+Knujsl5+I8P6vY2W8g4/2F4z/xLq8JXxQ0dQR8v/g5k0zM" crossorigin="anonymous" defer></script>

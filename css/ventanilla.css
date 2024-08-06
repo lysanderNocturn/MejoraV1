@@ -13,9 +13,6 @@
       transition: all 0.3s ease-in-out;
     }
 
-    .card:hover {
-      transform: scale(1.006);
-    }
 
     .form-group label {
       font-weight: bold;

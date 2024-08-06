@@ -11,10 +11,11 @@
     <style>
         body {
             background-color: #f0f8ff;
-            animation: backgroundFade 3s infinite alternate;
+            animation: backgroundFade 5s infinite alternate;
+            font-size: 16px;
             margin: 0;
             padding: 0;
-            font-size: 14px; /* Ajusta el tamaño de la fuente general */
+            line-height: 1.6;
         }
 
         @keyframes backgroundFade {
@@ -24,47 +25,46 @@
 
         .card {
             border: none;
-            border-radius: 8px; /* Menor radio para bordes redondeados */
-            box-shadow: 0 4px 8px rgba(100, 205, 255, 0.5); /* Menor sombra */
-            background-color: rgba(255, 255, 255, 0.7);
-            margin-top: 10px; /* Menor margen superior */
-            padding: 8px; /* Menor padding */
-            transition: all 0.3s ease-in-out;          
-        }
-
-        .card:hover {
-            transform: scale(1.02);
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(100, 205, 255, 0.5);
+            background-color: rgba(255, 255, 255, 0.9);
+            margin-top: 20px;
+            padding: 16px;
         }
 
         .form-group label {
             font-weight: bold;
-            font-size: 14px; /* Menor tamaño de fuente */
+            font-size: 16px;
         }
 
-        .btn-primary, .btn-secondary {
-            font-size: 14px; /* Menor tamaño de fuente en botones */
-            padding: 4px 8px; /* Menor padding en botones */
+        .btn {
+            font-size: 16px;
+            padding: 8px 16px;
         }
 
         .btn-primary {
             background-color: #0d47a1;
             border-color: #0d47a1;
-            transition: all 0.3s ease-in-out;
         }
 
         .btn-primary:hover {
             background-color: #2962ff;
             border-color: #2962ff;
-            transform: scale(1.05);
         }
 
-        .btn-secondary:hover {
-            transform: scale(1.05);
+        .btn-warning {
+            background-color: #f57f17;
+            border-color: #f57f17;
+        }
+
+        .btn-warning:hover {
+            background-color: #ffb300;
+            border-color: #ffb300;
         }
 
         .form-control {
             animation: inputPulse 2s infinite alternate;
-            font-size: 14px; /* Menor tamaño de fuente en inputs */
+            font-size: 16px;
         }
 
         @keyframes inputPulse {
@@ -73,43 +73,32 @@
         }
 
         .table-responsive {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 8px; /* Menor padding */
+            padding: 16px;
         }
 
         .table {
-            margin: 8px; /* Menor margen */
-            max-width: 80%; /* Ajusta la anchura máxima */
-            font-size: 12px; /* Menor tamaño de fuente en la tabla */
+            margin: 16px 0;
+            width: 100%;
+            font-size: 16px;
         }
 
         .table td, .table th {
-            padding: .3rem; /* Menor padding en celdas */
+            padding: .5rem;
         }
 
         .table-hover tbody tr:hover {
             background-color: #f1f1f1;
-            transform: scale(1.01);
-            transition: all 0.3s ease-in-out;
         }
 
         .loading-spinner {
             display: none;
-            margin: 30px auto; /* Menor margen */
-            border: 6px solid #f3f3f3; /* Menor borde */
+            margin: 40px auto;
+            border: 8px solid #f3f3f3;
             border-radius: 50%;
-            border-top: 6px solid #3498db; /* Menor borde superior */
-            width: 60px; /* Menor ancho */
-            height: 60px; /* Menor altura */
-            -webkit-animation: spin 1.5s linear infinite; /* Menor velocidad de animación */
+            border-top: 8px solid #3498db;
+            width: 80px;
+            height: 80px;
             animation: spin 1.5s linear infinite;
-        }
-
-        @-webkit-keyframes spin {
-            0% { -webkit-transform: rotate(0deg); }
-            100% { -webkit-transform: rotate(360deg); }
         }
 
         @keyframes spin {
@@ -120,7 +109,7 @@
         .tooltip-inner {
             background-color: #0d47a1;
             color: #fff;
-            font-size: 12px; /* Menor tamaño de fuente en tooltips */
+            font-size: 14px;
         }
 
         .tooltip-arrow {
@@ -129,15 +118,15 @@
 
         .feedback-message {
             display: none;
-            margin-top: 5px; /* Menor margen superior */
+            margin-top: 10px;
             color: green;
             font-weight: bold;
-            font-size: 12px; /* Menor tamaño de fuente */
+            font-size: 14px;
         }
 
         @media (max-width: 768px) {
             .card {
-                margin: 8px; /* Menor margen en pantallas pequeñas */
+                margin: 8px;
             }
         }
     </style>
@@ -147,63 +136,63 @@
 <div class="container mt-4">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <div class="card slide-down">
+            <div class="card">
                 <div class="card-header">
                     <div class="input-group mb-3">
-                        <input type="text" id="searchInput" placeholder="Buscar..." class="form-control fade-in" data-bs-toggle="tooltip" data-bs-placement="top" title="Buscar en la tabla">
-                        <button id="searchButton" class="btn btn-primary fade-in" data-bs-toggle="tooltip" data-bs-placement="top" title="Realizar búsqueda">Buscar</button>
-                        <button id="resetButton" class="btn btn-warning fade-in" data-bs-toggle="tooltip" data-bs-placement="top" title="Restablecer búsqueda">Restablecer</button>
-                        <button id="downloadButton" class="btn btn-secondary fade-in" data-bs-toggle="tooltip" data-bs-placement="top" title="Descargar datos filtrados">Descargar</button>
+                        <input type="text" id="searchInput" placeholder="Buscar..." aria-label="Buscar" class="form-control" data-bs-toggle="tooltip" data-bs-placement="top" title="Buscar en la tabla">
+                        <button id="searchButton" class="btn btn-primary" aria-label="Buscar" data-bs-toggle="tooltip" data-bs-placement="top" title="Realizar búsqueda">Buscar</button>
+                        <button id="resetButton" class="btn btn-warning" aria-label="Restablecer búsqueda" data-bs-toggle="tooltip" data-bs-placement="top" title="Restablecer búsqueda">Restablecer</button>
+                        <button id="downloadButton" class="btn btn-secondary" aria-label="Descargar datos filtrados" data-bs-toggle="tooltip" data-bs-placement="top" title="Descargar datos filtrados">Descargar</button>
                     </div>
                     <div class="feedback-message" id="feedbackMessage"></div>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-hover fade-in">
+                        <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th class="sortable" data-bs-toggle="tooltip" data-bs-placement="top" title="Ordenar por Folio">Folio</th>
-                                    <!-- Más columnas -->
-                                    <th class="sortable" data-bs-toggle="tooltip" data-bs-placement="top" title="Ordenar por Nombre del propietario">Nombre del propietario</th>
-                                    <th class="sortable" data-bs-toggle="tooltip" data-bs-placement="top" title="Ordenar por Dirección">Dirección</th>
-                                    <th class="sortable" data-bs-toggle="tooltip" data-bs-placement="top" title="Ordenar por Localidad">Localidad</th>
-                                    <th class="sortable" data-bs-toggle="tooltip" data-bs-placement="top" title="Ordenar por Ubicación">Ubicación</th>
-                                    <th class="sortable" data-bs-toggle="tooltip" data-bs-placement="top" title="Ordenar por Tipo de trámite">Tipo de trámite</th>
-                                    <th class="sortable" data-bs-toggle="tooltip" data-bs-placement="top" title="Ordenar por Fecha de ingreso">Fecha de ingreso</th>
-                                    <th class="sortable" data-bs-toggle="tooltip" data-bs-placement="top" title="Ordenar por Nombre del solicitante">Nombre del solicitante</th>
-                                    <th class="sortable" data-bs-toggle="tooltip" data-bs-placement="top" title="Ordenar por Teléfono">Teléfono</th>
-                                    <th class="sortable" data-bs-toggle="tooltip" data-bs-placement="top" title="Ordenar por Correo">Correo</th>
-                                    <th class="sortable" data-bs-toggle="tooltip" data-bs-placement="top" title="Ordenar por Usuario que recibe">Usuario que recibe</th>
-                                    <th class="sortable" data-bs-toggle="tooltip" data-bs-placement="top" title="Ordenar por Comentarios">Comentarios</th>
+                                    <th class="sortable" scope="col" aria-sort="none" data-bs-toggle="tooltip" data-bs-placement="top" title="Ordenar por Folio">Folio</th>
+                                    <th class="sortable" scope="col" aria-sort="none" data-bs-toggle="tooltip" data-bs-placement="top" title="Ordenar por Nombre del propietario">Nombre del propietario</th>
+                                    <th class="sortable" scope="col" aria-sort="none" data-bs-toggle="tooltip" data-bs-placement="top" title="Ordenar por Dirección">Dirección</th>
+                                    <th class="sortable" scope="col" aria-sort="none" data-bs-toggle="tooltip" data-bs-placement="top" title="Ordenar por Localidad">Localidad</th>
+                                    <th class="sortable" scope="col" aria-sort="none" data-bs-toggle="tooltip" data-bs-placement="top" title="Ordenar por Ubicación">Ubicación</th>
+                                    <th class="sortable" scope="col" aria-sort="none" data-bs-toggle="tooltip" data-bs-placement="top" title="Ordenar por Tipo de trámite">Tipo de trámite</th>
+                                    <th class="sortable" scope="col" aria-sort="none" data-bs-toggle="tooltip" data-bs-placement="top" title="Ordenar por Fecha de ingreso">Fecha de ingreso</th>
+                                    <th class="sortable" scope="col" aria-sort="none" data-bs-toggle="tooltip" data-bs-placement="top" title="Ordenar por Nombre del solicitante">Nombre del solicitante</th>
+                                    <th class="sortable" scope="col" aria-sort="none" data-bs-toggle="tooltip" data-bs-placement="top" title="Ordenar por Teléfono">Teléfono</th>
+                                    <th class="sortable" scope="col" aria-sort="none" data-bs-toggle="tooltip" data-bs-placement="top" title="Ordenar por Correo">Correo</th>
+                                    <th class="sortable" scope="col" aria-sort="none" data-bs-toggle="tooltip" data-bs-placement="top" title="Ordenar por Usuario que recibe">Usuario que recibe</th>
+                                    <th class="sortable" scope="col" aria-sort="none" data-bs-toggle="tooltip" data-bs-placement="top" title="Ordenar por Comentarios">Comentarios</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
                                     include('../conection.php');
                                     $conexion = connection();
-                                    $sql = "SELECT * FROM `formulario` ORDER BY `formulario`.`folio` DESC";
+                                    $sql = "SELECT * FROM formulario ORDER BY folio DESC";
                                     $result = mysqli_query($conexion, $sql);
-                                    if (mysqli_num_rows($result) > 0) {
-                                        while ($mostrar = mysqli_fetch_array($result)) { ?>
-                                            <tr class="fade-in">
-                                                <td><?php echo $mostrar['folio'] ?></td>
-                                                <td><?php echo $mostrar['nombre_propietario'] ?></td>
-                                                <td><?php echo $mostrar['direccion'] ?></td>
-                                                <td><?php echo $mostrar['localidad'] ?></td>
-                                                <td><?php echo $mostrar['ubicacion'] ?></td>
-                                                <td><?php echo $mostrar['tipo_tramite'] ?></td>
-                                                <td><?php echo $mostrar['fecha_ingreso'] ?></td>
-                                                <td><?php echo $mostrar['nombre_solicitante'] ?></td>
-                                                <td><?php echo $mostrar['telefono'] ?></td>
-                                                <td><?php echo $mostrar['correo'] ?></td>
-                                                <td><?php echo $mostrar['usuario_recibe'] ?></td>
-                                                <td><?php echo $mostrar['observaciones'] ?></td>
+                                    if ($result && mysqli_num_rows($result) > 0) {
+                                        while ($mostrar = mysqli_fetch_assoc($result)) { ?>
+                                            <tr>
+                                                <td><?php echo htmlspecialchars($mostrar['folio'], ENT_QUOTES, 'UTF-8') ?></td>
+                                                <td><?php echo htmlspecialchars($mostrar['nombre_propietario'], ENT_QUOTES, 'UTF-8') ?></td>
+                                                <td><?php echo htmlspecialchars($mostrar['direccion'], ENT_QUOTES, 'UTF-8') ?></td>
+                                                <td><?php echo htmlspecialchars($mostrar['localidad'], ENT_QUOTES, 'UTF-8') ?></td>
+                                                <td><?php echo htmlspecialchars($mostrar['ubicacion'], ENT_QUOTES, 'UTF-8') ?></td>
+                                                <td><?php echo htmlspecialchars($mostrar['tipo_tramite'], ENT_QUOTES, 'UTF-8') ?></td>
+                                                <td><?php echo htmlspecialchars($mostrar['fecha_ingreso'], ENT_QUOTES, 'UTF-8') ?></td>
+                                                <td><?php echo htmlspecialchars($mostrar['nombre_solicitante'], ENT_QUOTES, 'UTF-8') ?></td>
+                                                <td><?php echo htmlspecialchars($mostrar['telefono'], ENT_QUOTES, 'UTF-8') ?></td>
+                                                <td><?php echo htmlspecialchars($mostrar['correo'], ENT_QUOTES, 'UTF-8') ?></td>
+                                                <td><?php echo htmlspecialchars($mostrar['usuario_recibe'], ENT_QUOTES, 'UTF-8') ?></td>
+                                                <td><?php echo htmlspecialchars($mostrar['observaciones'], ENT_QUOTES, 'UTF-8') ?></td>
                                             </tr>
                                 <?php
                                         }
                                     } else {
-                                        echo "<tr><td colspan='12'>No hay registros</td></tr>";
+                                        echo "<tr><td colspan='12' class='text-center'>No hay registros</td></tr>";
                                     }
+                                    mysqli_close($conexion);
                                 ?>
                             </tbody>
                         </table>   
@@ -217,26 +206,31 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script>
         $(document).ready(function() {
+            // Tooltip Initialization
             $('[data-bs-toggle="tooltip"]').tooltip();
 
-            $('#searchButton').click(function() {
+            // Search Button Functionality
+            $('#searchButton').on('click', function() {
                 var searchText = $('#searchInput').val().toLowerCase();
                 $('table tbody tr').each(function() {
-                    var found = $(this).text().toLowerCase().indexOf(searchText) !== -1;
-                    $(this).toggle(found);
+                    var rowText = $(this).text().toLowerCase();
+                    $(this).toggle(rowText.includes(searchText));
                 });
                 $('#feedbackMessage').text('Búsqueda completada').fadeIn().delay(2000).fadeOut();
             });
 
-            $('#resetButton').click(function() {
+            // Reset Button Functionality
+            $('#resetButton').on('click', function() {
                 $('#searchInput').val('');
                 $('table tbody tr').show();
                 $('#feedbackMessage').text('Búsqueda restablecida').fadeIn().delay(2000).fadeOut();
             });
 
-            $('#downloadButton').click(function() {
+            // Download Button Functionality
+            $('#downloadButton').on('click', function() {
                 var wb = XLSX.utils.book_new();
-                var ws_data = [];
+                var ws_data = [['Folio', 'Nombre del propietario', 'Dirección', 'Localidad', 'Ubicación', 'Tipo de trámite', 'Fecha de ingreso', 'Nombre del solicitante', 'Teléfono', 'Correo', 'Usuario que recibe', 'Comentarios']];
+
                 $('table tr:visible').each(function() {
                     var row = [];
                     $(this).find('th, td').each(function() {
@@ -256,23 +250,24 @@
                 $('#feedbackMessage').text('Descarga completada').fadeIn().delay(2000).fadeOut();
             });
 
-            $('.sortable').click(function() {
-                var index = $(this).index();
-                var table = $(this).closest('table');
+            // Table Sorting Functionality
+            $('.sortable').on('click', function() {
+                var $this = $(this);
+                var index = $this.index();
+                var table = $this.closest('table');
                 var rows = table.find('tbody tr').get();
+                var sortAsc = $this.hasClass('asc');
 
                 rows.sort(function(a, b) {
                     var valA = $(a).children('td').eq(index).text().toLowerCase();
                     var valB = $(b).children('td').eq(index).text().toLowerCase();
-                    return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.localeCompare(valB);
+                    if ($.isNumeric(valA) && $.isNumeric(valB)) {
+                        return sortAsc ? valA - valB : valB - valA;
+                    }
+                    return sortAsc ? valA.localeCompare(valB) : valB.localeCompare(valA);
                 });
 
-                if ($(this).hasClass('asc')) {
-                    rows.reverse();
-                    $(this).removeClass('asc').addClass('desc');
-                } else {
-                    $(this).removeClass('desc').addClass('asc');
-                }
+                $this.toggleClass('asc desc');
 
                 $.each(rows, function(index, row) {
                     table.children('tbody').append(row);
