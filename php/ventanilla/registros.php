@@ -167,34 +167,38 @@
                             </thead>
                             <tbody>
                                 <?php
-                                    include('../conection.php');
-                                    $conexion = connection();
-                                    $sql = "SELECT * FROM formulario ORDER BY folio DESC";
-                                    $result = mysqli_query($conexion, $sql);
-                                    if ($result && mysqli_num_rows($result) > 0) {
-                                        while ($mostrar = mysqli_fetch_assoc($result)) { ?>
-                                            <tr>
-                                                <td><?php echo htmlspecialchars($mostrar['folio'], ENT_QUOTES, 'UTF-8') ?></td>
-                                                <td><?php echo htmlspecialchars($mostrar['nombre_propietario'], ENT_QUOTES, 'UTF-8') ?></td>
-                                                <td><?php echo htmlspecialchars($mostrar['direccion'], ENT_QUOTES, 'UTF-8') ?></td>
-                                                <td><?php echo htmlspecialchars($mostrar['localidad'], ENT_QUOTES, 'UTF-8') ?></td>
-                                                <td><?php echo htmlspecialchars($mostrar['ubicacion'], ENT_QUOTES, 'UTF-8') ?></td>
-                                                <td><?php echo htmlspecialchars($mostrar['tipo_tramite'], ENT_QUOTES, 'UTF-8') ?></td>
-                                                <td><?php echo htmlspecialchars($mostrar['fecha_ingreso'], ENT_QUOTES, 'UTF-8') ?></td>
-                                                <td><?php echo htmlspecialchars($mostrar['nombre_solicitante'], ENT_QUOTES, 'UTF-8') ?></td>
-                                                <td><?php echo htmlspecialchars($mostrar['telefono'], ENT_QUOTES, 'UTF-8') ?></td>
-                                                <td><?php echo htmlspecialchars($mostrar['correo'], ENT_QUOTES, 'UTF-8') ?></td>
-                                                <td><?php echo htmlspecialchars($mostrar['usuario_recibe'], ENT_QUOTES, 'UTF-8') ?></td>
-                                                <td><?php echo htmlspecialchars($mostrar['observaciones'], ENT_QUOTES, 'UTF-8') ?></td>
-                                            </tr>
+                                include('../conection.php');
+                                $conexion = connection();
+                                $sql = "SELECT * FROM formulario ORDER BY folio DESC";
+                                $result = mysqli_query($conexion, $sql);
+                                if ($result && mysqli_num_rows($result) > 0) {
+                                    while ($mostrar = mysqli_fetch_assoc($result)) { ?>
+                                        <tr>
+                                            <td><?php echo htmlspecialchars($mostrar['folio'], ENT_QUOTES, 'UTF-8') ?></td>
+                                            <td><?php echo htmlspecialchars($mostrar['nombre_propietario'], ENT_QUOTES, 'UTF-8') ?></td>
+                                            <td><?php echo htmlspecialchars($mostrar['direccion'], ENT_QUOTES, 'UTF-8') ?></td>
+                                            <td><?php echo htmlspecialchars($mostrar['localidad'], ENT_QUOTES, 'UTF-8') ?></td>
+                                            <td><?php echo htmlspecialchars($mostrar['ubicacion'], ENT_QUOTES, 'UTF-8') ?></td>
+                                            <td><?php echo htmlspecialchars($mostrar['tipo_tramite'], ENT_QUOTES, 'UTF-8') ?></td>
+                                            <td><?php echo htmlspecialchars($mostrar['fecha_ingreso'], ENT_QUOTES, 'UTF-8') ?></td>
+                                            <td><?php echo htmlspecialchars($mostrar['nombre_solicitante'], ENT_QUOTES, 'UTF-8') ?></td>
+                                            <td><?php echo htmlspecialchars($mostrar['telefono'], ENT_QUOTES, 'UTF-8') ?></td>
+                                            <td><?php echo htmlspecialchars($mostrar['correo'], ENT_QUOTES, 'UTF-8') ?></td>
+                                            <td><?php echo htmlspecialchars($mostrar['usuario_recibe'], ENT_QUOTES, 'UTF-8') ?></td>
+                                            <td><?php echo htmlspecialchars($mostrar['observaciones'], ENT_QUOTES, 'UTF-8') ?></td>
+                                            <td>
+                                                <a href="../crear_formato.pfd?folio=<?php echo urlencode($mostrar['folio']); ?>" class="btn btn-secondary btn-sm">Descargar PDF</a>
+                                            </td>
+                                        </tr>
                                 <?php
-                                        }
-                                    } else {
-                                        echo "<tr><td colspan='12' class='text-center'>No hay registros</td></tr>";
                                     }
-                                    mysqli_close($conexion);
+                                } else {
+                                    echo "<tr><td colspan='13' class='text-center'>No hay registros</td></tr>";
+                                }
+                                mysqli_close($conexion);
                                 ?>
                             </tbody>
+
                         </table>   
                     </div>
                 </div>

@@ -6,10 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Registro de actividades</title>
   <!-- Cargar hojas de estilo -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
   <link rel="stylesheet" href="../../css/globals.css">
   <link rel="stylesheet" href="../../css/ventanilla.css">
   <style>
@@ -37,9 +35,7 @@
 
 <body>
 
-    <?php
-    include('navVentana.php')
-    ?>
+  <?php include('navVentana.php') ?>
 
   <!-- Main Content -->
   <div class="content">
@@ -51,7 +47,7 @@
               <h5>Completar Información</h5>
             </div>
             <div class="card-body">
-              <form id="formulario" action="agregarExtra.php" method="post" enctype="multipart/form-data">
+              <form id="formulario" action="download_pdf.php" method="get">
                 <!-- Campo de selección de folio -->
                 <div class="mb-3">
                   <label for="folio" class="form-label">Folio</label>
@@ -88,8 +84,7 @@
                   <input type="file" class="form-control" id="identificacion" name="identificacion" accept="image/*">
                 </div>
 
-                <button type="submit" class="btn btn-primary">Enviar a verificar</button>
-                <div id="mensaje-envio" style="margin-top: 10px; display: none;"></div>
+                <button type="submit" class="btn btn-primary">Descargar PDF</button>
               </form>
             </div>
           </div>
@@ -99,7 +94,7 @@
       <!-- Sección del mapa interactivo -->
       <div class="row justify-content-center mt-4">
         <div class="col-md-10">
-          <h2 class="text-center mb-4">Mapa Interactivo</h2>
+          <h2 class="text-center mb-4">Buscar Dirección Por Mapa</h2>
           <div id="map"></div>
         </div>
       </div>
@@ -107,11 +102,10 @@
   </div>
 
   <!-- Cargar scripts -->
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.7.5/proj4.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.7.5/proj4.js"></script>
   <script>
     // Definir la proyección UTM para la zona 13 Norte
     proj4.defs('EPSG:32613', '+proj=utm +zone=13 +datum=WGS84 +units=m +no_defs');
@@ -194,45 +188,6 @@
     }
 
     map.on('click', onMapClick);
-
-    // Función para añadir marcadores personalizados
-    function addCustomMarker(lat, lon, title, description) {
-      var customMarker = L.marker([lat, lon]).addTo(map);
-      if (title || description) {
-        var popupContent = '';
-        if (title) popupContent += `<h5>${title}</h5>`;
-        if (description) popupContent += `<p>${description}</p>`;
-        customMarker.bindPopup(popupContent);
-      }
-    }
-
-    // Función para medir distancias entre puntos
-    var measureControl = L.control.measure({
-      position: 'topleft',
-      primaryLengthUnit: 'meters',
-      secondaryLengthUnit: 'kilometers',
-      primaryAreaUnit: 'sqmeters',
-      activeColor: '#db4a29',
-      completedColor: '#9b2d14'
-    });
-    measureControl.addTo(map);
-
-    // Función para geolocalizar al usuario si el navegador lo permite
-    map.locate({ setView: true, maxZoom: 16 });
-
-    function onLocationFound(e) {
-      var radius = e.accuracy / 2;
-      L.circle(e.latlng, radius).addTo(map)
-        .bindPopup("Estás dentro de aproximadamente " + radius + " metros de este punto").openPopup();
-    }
-
-    map.on('locationfound', onLocationFound);
-
-    function onLocationError(e) {
-      alert(e.message);
-    }
-
-    map.on('locationerror', onLocationError);
   </script>
 </body>
 
