@@ -1,24 +1,23 @@
 <?php
-include('connection.php');
+include('conection.php'); // Incluye el archivo de conexión
 
-// Conexión a la base de datos
-$conn = connection();
-
-// Consulta para obtener los datos
-$sql = "SELECT nombre_propietario, direccion, coordenadas, estatus FROM formulario";
+$sql = "SELECT nombre_propietario, direccion, ubicacion, estatus FROM formulario WHERE ubicacion IS NOT NULL";
 $result = $conn->query($sql);
 
-$locations = [];
+$locations = array();
 
 if ($result->num_rows > 0) {
-    // Recorrer resultados
     while($row = $result->fetch_assoc()) {
-        $locations[] = $row;
+        $locations[] = array(
+            'nombre_propietario' => $row['nombre_propietario'],
+            'direccion' => $row['direccion'],
+            'ubicacion' => $row['ubicacion'], // Coordenadas UTM en formato "easting, northing"
+            'estatus' => $row['estatus']
+        );
     }
 }
 
-$conn->close();
-
-// Devolver resultados en formato JSON
 echo json_encode($locations);
+
+$conn->close();
 ?>

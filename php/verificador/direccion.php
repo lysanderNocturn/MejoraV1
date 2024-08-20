@@ -11,8 +11,8 @@ include('usuario.php');
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-            <link rel="stylesheet" href="../../css/globals.css">
-            <link rel="stylesheet" href="../../css/ventanilla.css">
+    <link rel="stylesheet" href="../../css/globals.css">
+    <link rel="stylesheet" href="../../css/ventanilla.css">
     <style>
         #map {
             height: 550px;
@@ -31,9 +31,7 @@ include('usuario.php');
 </head>
 <body>
 
-        <?php
-        include('sidenav.php')
-        ?>
+    <?php include('sidenav.php'); ?>
 
     <div class="content">
         <div class="row justify-content-center mt-4">
@@ -100,8 +98,9 @@ include('usuario.php');
                 var locations = JSON.parse(response);
                 locations.forEach(function(location) {
                     if (location.estatus === 'verificador') {
-                        var coords = location.coordenadas.split(', ');
-                        addMarker(parseFloat(coords[0]), parseFloat(coords[1]), location.nombre_propietario + '<br>' + location.direccion);
+                        var coords = location.ubicacion.split(', ');
+                        addMarker(parseFloat(coords[0]), parseFloat(coords[1]), 
+                            location.nombre_propietario + '<br>' + location.direccion);
                     }
                 });
             },

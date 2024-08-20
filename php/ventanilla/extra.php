@@ -47,7 +47,7 @@
               <h5>Completar Información</h5>
             </div>
             <div class="card-body">
-              <form id="formulario" action="download_pdf.php" method="get">
+              <form id="formulario" action="agregarExtra.php" method="post" enctype="multipart/form-data">
                 <!-- Campo de selección de folio -->
                 <div class="mb-3">
                   <label for="folio" class="form-label">Folio</label>
@@ -55,9 +55,13 @@
                     <option value="" selected disabled>Selecciona un folio</option>
                     <?php
                     include('../conection.php');
+                    $conn = connection();
+                    $sql = "SELECT folio FROM formulario"; // Adjust query based on your table structure
+                    $result = $conn->query($sql);
                     while($row = $result->fetch_assoc()) {
                         echo "<option value='" . $row["folio"] . "'>" . $row["folio"] . "</option>";
                     }
+                    $conn->close();
                     ?>
                   </select>
                 </div>
