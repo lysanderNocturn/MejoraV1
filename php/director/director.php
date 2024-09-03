@@ -36,22 +36,56 @@ while ($row = $result_registros_mes->fetch_assoc()) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de actividades</title>
+    <title>Registro de Actividades</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        /* Estilo para tarjetas más pequeñas */
-        .card {
-            margin-bottom: 20px;
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f8f9fa;
+            margin: 0;
         }
 
-        /* Estilo para separar por color cada sección del gráfico */
+        .container {
+            margin-top: 20px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .card {
+            margin-bottom: 20px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+        }
+
+        .card-header {
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+            font-weight: bold;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .card-body {
+            padding: 30px;
+        }
+
         .tipo-tramite-chart .chartjs-render-monitor .chartjs-doughnut-legend ul li span {
             display: inline-block;
             width: 12px;
             height: 12px;
             margin-right: 5px;
             border-radius: 50%;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 400px;
+            width: 100%;
         }
     </style>
 </head>
@@ -68,7 +102,9 @@ while ($row = $result_registros_mes->fetch_assoc()) {
                         Gráfico de Tipo de Trámite
                     </div>
                     <div class="card-body tipo-tramite-chart">
-                        <canvas id="grafico_tipo_tramite" width="400" height="400"></canvas>
+                        <div class="chart-container">
+                            <canvas id="grafico_tipo_tramite"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -78,7 +114,9 @@ while ($row = $result_registros_mes->fetch_assoc()) {
                         Gráfico de Registros por Año y Mes
                     </div>
                     <div class="card-body">
-                        <canvas id="grafico_registros_mes" width="400" height="400"></canvas>
+                        <div class="chart-container">
+                            <canvas id="grafico_registros_mes"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -112,21 +150,20 @@ while ($row = $result_registros_mes->fetch_assoc()) {
             }]
         };
 
-        // Configuración común para ambos gráficos
-        var opciones = {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        };
-
-        // Creación del gráfico de Tipo de Trámite
+        // Configuración para el gráfico de Tipo de Trámite
         var ctx1 = document.getElementById('grafico_tipo_tramite').getContext('2d');
         var graficoTipoTramite = new Chart(ctx1, {
             type: 'doughnut',
             data: datosTipoTramite,
-            options: opciones
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                    },
+                }
+            }
         });
 
         // Datos para el gráfico de Registros por Año y Mes
@@ -137,16 +174,42 @@ while ($row = $result_registros_mes->fetch_assoc()) {
                 data: <?php echo json_encode($data_registros_mes); ?>,
                 backgroundColor: 'rgba(54, 162, 235, 0.2)',
                 borderColor: 'rgba(54, 162, 235, 1)',
-                borderWidth: 1
+                borderWidth: 2,
+                fill: true
             }]
         };
 
-        // Creación del gráfico de Registros por Año y Mes
+        // Configuración para el gráfico de Registros por Año y Mes
         var ctx2 = document.getElementById('grafico_registros_mes').getContext('2d');
         var graficoRegistrosMes = new Chart(ctx2, {
             type: 'line',
             data: datosRegistrosMes,
-            options: opciones
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        display: true,
+                        title: {
+                            display: true,
+                            text: 'Meses'
+                        }
+                    },
+                    y: {
+                        display: true,
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Cantidad de Registros'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false,
+                    }
+                }
+            }
         });
     </script>
 

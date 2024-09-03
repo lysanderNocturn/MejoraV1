@@ -15,18 +15,22 @@
       height: 400px;
       width: 100%;
     }
+
     #imagen-preview {
       max-width: 100%;
       margin-top: 10px;
       display: none;
     }
+
     .leaflet-popup-content-wrapper {
       padding: 10px;
     }
+
     .leaflet-popup-content {
       max-height: 300px;
       overflow-y: auto;
     }
+
     .card {
       margin-bottom: 1.5rem;
     }
@@ -56,9 +60,9 @@
                     <?php
                     include('../conection.php');
                     $conn = connection();
-                    $sql = "SELECT folio FROM formulario"; // Adjust query based on your table structure
+                    $sql = "SELECT folio FROM formulario"; // Ajusta la consulta según la estructura de tu tabla
                     $result = $conn->query($sql);
-                    while($row = $result->fetch_assoc()) {
+                    while ($row = $result->fetch_assoc()) {
                         echo "<option value='" . $row["folio"] . "'>" . $row["folio"] . "</option>";
                     }
                     $conn->close();
@@ -75,20 +79,21 @@
                 <!-- Campos para subir archivos -->
                 <div class="mb-3">
                   <label for="escrituras" class="form-label">Escrituras del Inmueble</label>
-                  <input type="file" class="form-control" id="escrituras" name="escrituras" accept="image/*">
+                  <input type="file" class="form-control" id="escrituras" name="escrituras" accept="image/*" required>
                 </div>
 
                 <div class="mb-3">
                   <label for="boleta-predial" class="form-label">Boleta del Predial</label>
-                  <input type="file" class="form-control" id="boleta-predial" name="boleta-predial" accept="image/*">
+                  <input type="file" class="form-control" id="boleta-predial" name="boleta-predial" accept="image/*" required>
                 </div>
 
                 <div class="mb-3">
                   <label for="identificacion" class="form-label">Identificación Oficial</label>
-                  <input type="file" class="form-control" id="identificacion" name="identificacion" accept="image/*">
+                  <input type="file" class="form-control" id="identificacion" name="identificacion" accept="image/*" required>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Descargar PDF</button>
+
               </form>
             </div>
           </div>

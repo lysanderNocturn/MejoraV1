@@ -135,7 +135,7 @@
 
 <div class="container mt-4">
     <div class="row justify-content-center">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
                     <div class="input-group mb-3">
@@ -186,9 +186,6 @@
                                             <td><?php echo htmlspecialchars($mostrar['correo'], ENT_QUOTES, 'UTF-8') ?></td>
                                             <td><?php echo htmlspecialchars($mostrar['usuario_recibe'], ENT_QUOTES, 'UTF-8') ?></td>
                                             <td><?php echo htmlspecialchars($mostrar['observaciones'], ENT_QUOTES, 'UTF-8') ?></td>
-                                            <td>
-                                                <a href="../crear_formato.pfd?folio=<?php echo urlencode($mostrar['folio']); ?>" class="btn btn-secondary btn-sm">Descargar PDF</a>
-                                            </td>
                                         </tr>
                                 <?php
                                     }

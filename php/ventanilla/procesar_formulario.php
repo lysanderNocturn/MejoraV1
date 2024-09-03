@@ -16,10 +16,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $observaciones = $_POST['observaciones'];
 
     // Calcular la fecha de ingreso
-    $fecha_ingreso = date('Y-m-d');
+    $fecha_ingreso = date('d-m-Y');
 
     // Calcular la fecha de entrega estimada usando la función add_business_days
-    $fecha_entrega_estimada = date('Y-m-d', strtotime('+10 weekdays', strtotime($fecha_ingreso)));
+    $fecha_entrega_estimada = date('d-m-Y', strtotime('+10 weekdays', strtotime($fecha_ingreso)));
 
     // Obtener la conexión a la base de datos
     $conexion = connection();

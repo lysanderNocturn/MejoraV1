@@ -22,10 +22,10 @@
             border-radius: 15px;
             box-shadow: 0 10px 20px rgba(100, 205, 255, 1);
             background-color: rgba(255, 255, 255, 0.9);
-            margin: 20px;
-            padding: 20px;
+            margin: 10px;
+            padding: 10px;
             width: 100%;
-            max-width: 800px;
+            max-width: 600px;
         }
 
         .form-group label {
@@ -53,7 +53,7 @@
     <div class="content">
         <form action="procesar_formulario.php" method="post" onsubmit="return validarFormulario()">
             <div class="container card">
-                <h2 class="text-center mb-4">Recepción en ventanilla</h2>
+                <h2 class="text-center mb-12">Recepción en ventanilla</h2>
                 <div class="row justify-content-center">
                     <div class="col-md-6">
                         <div class="form-group">

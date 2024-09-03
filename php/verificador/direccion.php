@@ -18,7 +18,7 @@ include('usuario.php');
             height: 550px;
             width: 100%;
             border-radius: 20px;
-            border: 15px;
+            border: 15px solid transparent; /* Adjusted for better visibility */
         }
         .leaflet-popup-content-wrapper {
             padding: 10px;
@@ -47,12 +47,12 @@ include('usuario.php');
     <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.7.5/proj4.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        // Definir la proyección UTM para la zona 13 Norte
+        // Definir la proyección UTM para la Zona 13 Norte
         proj4.defs('EPSG:32613', '+proj=utm +zone=13 +datum=WGS84 +units=m +no_defs');
 
         var map = L.map('map').setView([22.22662, -102.32547], 13);
 
-        // Añadir capas base y de satélite
+        // Capas de mapas base
         var baseLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             maxZoom: 19,
             attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -70,19 +70,20 @@ include('usuario.php');
             attribution: '&copy; <a href="https://maps.google.com">Google Maps</a>'
         });
 
+        // Control de capas
         L.control.layers({
             'Mapa Base': baseLayer,
             'Callejero': streetLayer,
             'Híbrido': hybridLayer
         }).addTo(map);
 
-        // Función para convertir coordenadas UTM a lat/lng
+        // Convertir coordenadas UTM a latitud/longitud
         function utmToLatLng(easting, northing) {
             var latLng = proj4('EPSG:32613', 'EPSG:4326', [easting, northing]);
             return [latLng[1], latLng[0]]; // [lat, lng]
         }
 
-        // Función para añadir un marcador al mapa
+        // Añadir marcador al mapa
         function addMarker(easting, northing, label) {
             var latLng = utmToLatLng(easting, northing);
             L.marker(latLng)
@@ -90,24 +91,26 @@ include('usuario.php');
                 .bindPopup(label);
         }
 
-        // Obtener datos de la base de datos y añadir los marcadores
         $.ajax({
-            url: 'get_locations.php', // Archivo PHP para obtener los datos
-            method: 'GET',
-            success: function(response) {
-                var locations = JSON.parse(response);
-                locations.forEach(function(location) {
-                    if (location.estatus === 'verificador') {
-                        var coords = location.ubicacion.split(', ');
-                        addMarker(parseFloat(coords[0]), parseFloat(coords[1]), 
-                            location.nombre_propietario + '<br>' + location.direccion);
-                    }
-                });
-            },
-            error: function(error) {
-                console.error('Error fetching locations:', error);
+    url: 'get_locations.php',
+    method: 'GET',
+    dataType: 'json',
+    success: function(locations) {
+        console.log(locations);  // Imprime la respuesta
+        locations.forEach(function(location) {
+            if (location.estatus === 'verificador') {
+                var coords = location.ubicacion.split(', ');
+                addMarker(parseFloat(coords[0]), parseFloat(coords[1]),
+                    location.nombre_propietario + '<br>' + location.direccion);
             }
         });
+    },
+    error: function(xhr, status, error) {
+        console.error('Error al obtener ubicaciones:', status, error, xhr.responseText);
+        alert('Hubo un error al obtener las ubicaciones: ' + status + '. Por favor, inténtalo de nuevo más tarde.');
+    }
+});
+
     </script>
 </body>
 </html>

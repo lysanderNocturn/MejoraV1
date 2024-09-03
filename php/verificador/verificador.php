@@ -83,7 +83,7 @@
                         <tr>
                             <th>Folio</th>
                             <th>Nombre</th>
-                            <th>Descripción</th>
+                            <th>Direccion</th>
                             <th>Acciones</th>
                             <th>Detalles</th>
                         </tr>

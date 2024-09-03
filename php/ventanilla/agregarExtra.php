@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($conn->query($sql) === TRUE) {
             // Éxito al actualizar la base de datos
             // Redirigir a la descarga del PDF
-            header("Location: download.php?folio=$folio");
+            header("Location: download_pdf.php?folio=$folio");
             exit(); // Importante: Termina la ejecución después de redirigir
         } else {
             // Error al actualizar la base de datos
