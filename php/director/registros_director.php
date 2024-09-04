@@ -1,4 +1,4 @@
-<?php include ('navVentana.php') ?>
+<?php include ('navbar.php') ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
