@@ -151,6 +151,12 @@
                                                         <textarea class="form-control" id="comentarios-<?php echo htmlspecialchars($row['folio']); ?>" name="comentarios" rows="3" required></textarea>
                                                     </div>
                                                     <div class="mb-3">
+                                                        <label for="lote-<?php echo htmlspecialchars($row['folio']); ?>" class="form-label">Lote</label>
+                                                        <textarea class="form-control" id="lote-<?php echo htmlspecialchars($row['folio']); ?>" name="lote" rows="1" required></textarea>
+                                                        <label for="manzana-<?php echo htmlspecialchars($row['folio']); ?>" class="form-label">Manzana</label>
+                                                        <textarea class="form-control" id="manzana-<?php echo htmlspecialchars($row['folio']); ?>" name="manzana" rows="1" required></textarea>
+                                                    </div>
+                                                    <div class="mb-3">
                                                         <label for="imagen-<?php echo htmlspecialchars($row['folio']); ?>" class="form-label">Subir Imagen</label>
                                                         <input class="form-control" type="file" id="imagen-<?php echo htmlspecialchars($row['folio']); ?>" name="imagen" accept="image/*" required>
                                                     </div>
