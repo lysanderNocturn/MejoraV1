@@ -210,7 +210,6 @@
             // Tooltip Initialization
             $('[data-bs-toggle="tooltip"]').tooltip();
 
-            // Search Button Functionality
             $('#searchButton').on('click', function() {
                 var searchText = $('#searchInput').val().toLowerCase();
                 $('table tbody tr').each(function() {
@@ -220,14 +219,12 @@
                 $('#feedbackMessage').text('Búsqueda completada').fadeIn().delay(2000).fadeOut();
             });
 
-            // Reset Button Functionality
             $('#resetButton').on('click', function() {
                 $('#searchInput').val('');
                 $('table tbody tr').show();
                 $('#feedbackMessage').text('Búsqueda restablecida').fadeIn().delay(2000).fadeOut();
             });
 
-            // Download Button Functionality
             $('#downloadButton').on('click', function() {
                 var wb = XLSX.utils.book_new();
                 var ws_data = [['Folio', 'Nombre del propietario', 'Dirección', 'Localidad', 'Ubicación', 'Tipo de trámite', 'Fecha de ingreso', 'Nombre del solicitante', 'Teléfono', 'Correo', 'Usuario que recibe', 'Comentarios']];
@@ -251,7 +248,6 @@
                 $('#feedbackMessage').text('Descarga completada').fadeIn().delay(2000).fadeOut();
             });
 
-            // Table Sorting Functionality
             $('.sortable').on('click', function() {
                 var $this = $(this);
                 var index = $this.index();
