@@ -29,7 +29,7 @@ $pdf->AddPage();
 $pdf->useTemplate($tplId);
 
 // Configurar la fuente
-$pdf->SetFont('Arial', '', 12);
+$pdf->SetFont('Arial', '', 11);
 
 // Conectar a la base de datos
 include('../conection.php');
@@ -44,37 +44,40 @@ $data = $result->fetch_assoc();
 // Verificar si se encontró el registro
 if ($data) {
     // Escribir datos en el PDF
-    $pdf->SetXY(174, 21); // Cambia las coordenadas según la ubicación del campo
+    $pdf->SetXY(174, 21); 
     $pdf->Write(0, $data['folio']);
 
     $pdf->SetXY(52, 40);
     $pdf->Write(0, $data['nombre_propietario']);
     
-    $pdf->SetXY(33, 49); // Cambia las coordenadas según la ubicación del campo
+    $pdf->SetXY(33, 49); 
     $pdf->Write(0, $data['direccion']);
 
-    $pdf->SetXY(33, 57); // Cambia las coordenadas según la ubicación del campo
+    $pdf->SetXY(33, 57); 
     $pdf->Write(0, $data['localidad']);
 
-    $pdf->SetXY(105, 57); // Cambia las coordenadas según la ubicación del campo
+    $pdf->SetXY(105, 57); 
     $pdf->Write(0, $data['ubicacion']);
 
-    $pdf->SetXY(28, 72); // Cambia las coordenadas según la ubicación del campo
+    $pdf->SetXY(28, 72); 
     $pdf->Write(0, $data['tipo_tramite']);
 
-    $pdf->SetXY(57, 82); // Cambia las coordenadas según la ubicación del campo
+    $pdf->SetXY(58, 82); 
     $pdf->Write(0, $data['fecha_ingreso']);
 
-    $pdf->SetXY(52, 93); // Cambia las coordenadas según la ubicación del campo
+    $pdf->SetXY(119, 82); 
+    $pdf->Write(0, $data['fecha_entrega_estimada']);
+
+    $pdf->SetXY(52, 93); 
     $pdf->Write(0, $data['nombre_solicitante']);
 
-    $pdf->SetXY(33, 102); // Cambia las coordenadas según la ubicación del campo
+    $pdf->SetXY(33, 102); 
     $pdf->Write(0, $data['telefono']);
 
-    $pdf->SetXY(45, 110); // Cambia las coordenadas según la ubicación del campo
+    $pdf->SetXY(45, 110); 
     $pdf->Write(0, $data['correo']);
 
-    $pdf->SetXY(28, 120); // Cambia las coordenadas según la ubicación del campo
+    $pdf->SetXY(28, 120); 
     $pdf->Write(0, $data['usuario_recibe']);
     
     // Añadir más campos según sea necesario...
@@ -87,5 +90,5 @@ if ($data) {
 mysqli_close($conexion);
 
 // Guardar el archivo PDF modificado
-$pdf->Output('D', 'registro_actividades_' . $folio . '.pdf'); // El primer parámetro es el modo de salida, 'D' para descargar
+$pdf->Output('D', 'Formato_de_folio: ' . $folio . '.pdf'); // El primer parámetro es el modo de salida, 'D' para descargar
 ?>

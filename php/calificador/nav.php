@@ -24,7 +24,7 @@ if (!isset($_SESSION["username"])) {
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ml-auto"> <!-- Agregamos la clase ml-auto aquí -->
+      <ul class="navbar-nav ml-auto"> 
         <li class="nav-item">
           <a class="nav-link" href="ventanilla.php">Realizar trámite</a>
         </li>

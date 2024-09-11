@@ -144,15 +144,20 @@
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <form class="observaciones-form" data-folio="<?php echo htmlspecialchars($row['folio']); ?>" enctype="multipart/form-data">
+                                                <form action="verificarDatos.php" method="post" class="observaciones-form" data-folio="<?php echo htmlspecialchars($row['folio']); ?>" enctype="multipart/form-data">
                                                     <input type="hidden" name="folio" value="<?php echo htmlspecialchars($row['folio']); ?>">
                                                     <div class="mb-3">
                                                         <label for="comentarios-<?php echo htmlspecialchars($row['folio']); ?>" class="form-label">Comentarios</label>
                                                         <textarea class="form-control" id="comentarios-<?php echo htmlspecialchars($row['folio']); ?>" name="comentarios" rows="3" required></textarea>
                                                     </div>
                                                     <div class="mb-3">
+
+                                                        <label for="numero-<?php echo htmlspecialchars($row['folio']); ?>" class="form-label">Se asigna el numero: </label>
+                                                        <textarea class="form-control" id="numeroDireccion-<?php echo htmlspecialchars($row['folio']); ?>" name="numeroDireccion" rows="1" required></textarea>
+
                                                         <label for="lote-<?php echo htmlspecialchars($row['folio']); ?>" class="form-label">Lote</label>
                                                         <textarea class="form-control" id="lote-<?php echo htmlspecialchars($row['folio']); ?>" name="lote" rows="1" required></textarea>
+
                                                         <label for="manzana-<?php echo htmlspecialchars($row['folio']); ?>" class="form-label">Manzana</label>
                                                         <textarea class="form-control" id="manzana-<?php echo htmlspecialchars($row['folio']); ?>" name="manzana" rows="1" required></textarea>
                                                     </div>

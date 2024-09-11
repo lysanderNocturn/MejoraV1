@@ -2,11 +2,27 @@
 // Incluir el archivo de conexión a la base de datos
 include('../conection.php');
 
+// Función para calcular días hábiles
+function add_business_days($start_date, $days) {
+    $current_date = strtotime($start_date);
+    $i = 0;
+
+    while ($i < $days) {
+        $current_date = strtotime("+1 day", $current_date);
+        // Si es lunes (1) a viernes (5), cuenta como día hábil
+        if (date('N', $current_date) <= 5) {
+            $i++;
+        }
+    }
+    
+    return date('d-m-Y', $current_date);
+}
+
 // Verificar si se han enviado datos mediante el método POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Recoger los datos del formulario
     $nombre = $_POST['nombre'];
-    $nombre_solicitante = $_POST ['nombre_solicitante'];
+    $nombre_solicitante = $_POST['nombre_solicitante'];
     $direccion = $_POST['direccion'];
     $localidad = $_POST['localidad'];
     $tipoTramite = $_POST['tipoTramite'];
@@ -15,11 +31,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $usuario = $_POST['usuario'];
     $observaciones = $_POST['observaciones'];
 
-    // Calcular la fecha de ingreso
+    // Calcular la fecha de ingreso (hoy)
     $fecha_ingreso = date('d-m-Y');
 
-    // Calcular la fecha de entrega estimada usando la función add_business_days
-    $fecha_entrega_estimada = date('d-m-Y', strtotime('+10 weekdays', strtotime($fecha_ingreso)));
+    // Calcular la fecha de entrega estimada agregando 10 días hábiles
+    $fecha_entrega_estimada = add_business_days($fecha_ingreso, 10);
 
     // Obtener la conexión a la base de datos
     $conexion = connection();
@@ -29,7 +45,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             VALUES (folio(), '$nombre', '$direccion', '$localidad', '$tipoTramite', '$fecha_ingreso', '$nombre_solicitante', '$telefono', '$correo', '$usuario', '$observaciones', '$fecha_entrega_estimada', 'ventanilla')";
 
     // Ejecutar la consulta
-    // deepcode ignore Sqli: <please specify a reason of ignoring this>
     if (mysqli_query($conexion, $sql)) {
         // Alerta de éxito y redirección
         echo "<script>alert('Tramite registrado correctamente.'); window.location.href='extra.php';</script>";

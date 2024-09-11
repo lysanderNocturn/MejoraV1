@@ -58,15 +58,19 @@
                   <select class="form-select" id="folio" name="folio" required>
                     <option value="" selected disabled>Selecciona un folio</option>
                     <?php
-                    include('../conection.php');
-                    $conn = connection();
-                    $sql = "SELECT folio FROM formulario"; // Ajusta la consulta según la estructura de tu tabla
-                    $result = $conn->query($sql);
-                    while ($row = $result->fetch_assoc()) {
-                        echo "<option value='" . $row["folio"] . "'>" . $row["folio"] . "</option>";
-                    }
-                    $conn->close();
-                    ?>
+                      include('../conection.php');
+                      $conn = connection();
+                      // Ajusta la consulta para ordenar de forma descendente
+                      $sql = "SELECT folio FROM formulario ORDER BY folio DESC"; 
+                      $result = $conn->query($sql);
+                      
+                      while ($row = $result->fetch_assoc()) {
+                          echo "<option value='" . $row["folio"] . "'>" . $row["folio"] . "</option>";
+                      }
+                      
+                      $conn->close();
+                   ?>
+
                   </select>
                 </div>
 

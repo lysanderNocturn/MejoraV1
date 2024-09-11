@@ -29,7 +29,7 @@ $pdf->AddPage();
 $pdf->useTemplate($tplId);
 
 // Configurar la fuente
-$pdf->SetFont('Arial', '', 12);
+$pdf->SetFont('Arial', '', 16);
 
 // Conectar a la base de datos
 include('conection.php');
