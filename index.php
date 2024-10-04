@@ -71,6 +71,18 @@
         .form-check-label {
             color: #007bff;
         }
+        .card-img-top{
+            width: 50;
+            padding: auto;
+            border-radius: 5px;
+            width: auto;
+            height: 220px;
+        }
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            background-image: url(../img/bg.jpg);
+            background-size: cover;
+        }
     </style>
 </head>
 
@@ -99,20 +111,63 @@
         </div>
     </nav>
     <!-- Fin Navbar -->
-
+<div>
     <div class="container py-5">
-        <div class="jumbotron text-center bg-white shadow-sm">
-            <h1 class="display-4">Bienvenido a la página de trámites</h1>
-            <p class="lead">Encuentra aquí los trámites necesarios para tus gestiones.</p>
-            <hr class="my-4">
-            <p>Si no encuentras el trámite que necesitas, contáctanos y te ayudaremos.</p>
-            <a class="btn btn-primary btn-lg" href="#contacto" role="button"><i class="fas fa-phone-alt mr-2"></i>Contactarnos</a>
+    <div class="jumbotron text-center bg-white shadow-sm">
+    <h1 class="display-4">Bienvenido a la página de trámites</h1>
+    <p class="lead">Encuentra aquí los trámites necesarios para tus gestiones.</p>
+    <hr class="my-4">
+    <p>Si no encuentras el trámite que necesitas, contáctanos y te ayudaremos.</p>
+    <a class="btn btn-primary btn-lg" href="#contacto" role="button"><i class="fas fa-phone-alt mr-2"></i>Contactarnos</a>
+
+
+        <!-- Carrusel de Bootstrap -->
+        <div id="tramitesCarousel" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#tramitesCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#tramitesCarousel" data-slide-to="1"></li>
+            <li data-target="#tramitesCarousel" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+            <img src="img/imagen 1.jpg" class="d-block w-100" alt="Trámite 1">
+            <div class="carousel-caption d-none d-md-block">
+                <h5>Trámite 1</h5>
+                <p>Descripción del primer trámite.</p>
+            </div>
+            </div>
+            <div class="carousel-item">
+            <img src="img/imagen 2.jpg" class="d-block w-100" alt="Trámite 2">
+            <div class="carousel-caption d-none d-md-block">
+                <h5>Trámite 2</h5>
+                <p>Descripción del segundo trámite.</p>
+            </div>
+            </div>
+            <div class="carousel-item">
+            <img src="img/imagen 3.jpg" class="d-block w-100" alt="Trámite 3">
+            <div class="carousel-caption d-none d-md-block">
+                <h5>Trámite 3</h5>
+                <p>Descripción del tercer trámite.</p>
+            </div>
+            </div>
         </div>
+        <a class="carousel-control-prev" href="#tramitesCarousel" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Anterior</span>
+        </a>
+        <a class="carousel-control-next" href="#tramitesCarousel" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Siguiente</span>
+        </a>
+        </div>
+
+    </div>
+
 
         <div class="row">
             <div class="col-md-4">
                 <div class="card mb-4 shadow-sm">
-                    <img src="imagen_tramite1.jpg" class="card-img-top" alt="Trámite número oficial">
+                    <img src="img/imagen 1.jpg" class="card-img-top" alt="Trámite número oficial">
                     <div class="card-body">
                         <h5 class="card-title">Trámite número oficial</h5>
                         <p class="card-text">Obtén tu número oficial.</p>
@@ -123,7 +178,7 @@
             </div>
             <div class="col-md-4">
                 <div class="card mb-4 shadow-sm">
-                    <img src="imagen_tramite1.jpg" class="card-img-top" alt="Trámite número oficial">
+                    <img src="img/imagen 2.jpg" class="card-img-top" alt="Trámite número oficial">
                     <div class="card-body">
                         <h5 class="card-title">Trámite número oficial</h5>
                         <p class="card-text">Obtén tu número oficial.</p>
@@ -134,7 +189,7 @@
             </div>
             <div class="col-md-4">
                 <div class="card mb-4 shadow-sm">
-                    <img src="imagen_tramite1.jpg" class="card-img-top" alt="Trámite número oficial">
+                    <img src="img/imagen 3.jpg" class="card-img-top" alt="Trámite número oficial">
                     <div class="card-body">
                         <h5 class="card-title">Trámite número oficial</h5>
                         <p class="card-text">Obtén tu número oficial.</p>
