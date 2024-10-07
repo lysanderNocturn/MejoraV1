@@ -9,7 +9,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $ubicacion = $_POST['ubicacion'];
 
     // Directorio donde se guardarán los archivos
-    $directorio = "archivos/$folio/";
+    $directorio = "../../$folio/";
 
     // Verificar si el directorio ya existe
     if (!file_exists($directorio)) {

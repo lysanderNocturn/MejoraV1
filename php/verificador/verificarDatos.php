@@ -1,15 +1,17 @@
 <?php
-include('../conection.php');  // Asegúrate de que la ruta sea correcta
+include('../conection.php');  // Asegúrate de que la ruta sea correcta y que $mysqli esté correctamente definido
 
 $folio = $_POST['folio'];
 $comentarios = $_POST['comentarios'];
 $numeroDireccion = $_POST['numeroDireccion'];
 $lote = $_POST['lote'];
 $manzana = $_POST['manzana'];
+$estatus = 'ventanilla';
+$target_file = null;  // Inicializamos la variable para la imagen
 
 // Verificar si se ha subido una imagen
-if (isset($_FILES['imagen'])) {
-    $target_directory = '../../uploads/';
+if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] == 0) {
+    $target_directory = "../../$folio/";
     $target_file = $target_directory . basename($_FILES['imagen']['name']);
     
     // Verificar que el directorio de destino exista
@@ -26,11 +28,22 @@ if (isset($_FILES['imagen'])) {
 }
 
 // Actualizar los datos en la base de datos según el folio
-if ($mysqli) {  // Verificar si la conexión existe
-    $sql = "UPDATE formulario SET comentarios = ?, numeroDireccion = ?, lote = ?, manzana = ?, imagen = ? WHERE folio = ?";
+if ($mysqli) {
+    // Si se subió una imagen, la incluimos en la actualización, de lo contrario, omitimos la columna
+    if ($target_file) {
+        $sql = "UPDATE formulario SET comentarios = ?, numeroDireccion = ?, lote = ?, manzana = ?, imagen = ?, estatus = ? WHERE folio = ?";
+    } else {
+        $sql = "UPDATE formulario SET comentarios = ?, numeroDireccion = ?, lote = ?, manzana = ?, estatus = ? WHERE folio = ?";
+    }
+
     $stmt = $mysqli->prepare($sql);
     if ($stmt) {
-        $stmt->bind_param('sssssi', $comentarios, $numeroDireccion, $lote, $manzana, $target_file, $folio);
+        if ($target_file) {
+            $stmt->bind_param('sssssss', $comentarios, $numeroDireccion, $lote, $manzana, $target_file, $estatus, $folio);
+        } else {
+            $stmt->bind_param('ssssss', $comentarios, $numeroDireccion, $lote, $manzana, $estatus, $folio);
+        }
+
         if ($stmt->execute()) {
             echo "Datos actualizados correctamente.<br />";
         } else {
@@ -43,71 +56,4 @@ if ($mysqli) {  // Verificar si la conexión existe
 } else {
     echo "Error: No se pudo conectar a la base de datos.<br />";
 }
-
-// Cerrar la conexión MySQL
-if ($mysqli) {
-    $mysqli->close();
-}
 ?>
-
-
-<?php
-// Verificar si se han recibido datos del formulario
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Incluir el archivo de conexión a la base de datos
-    include ('../conection.php');
-
-    // Recoger los datos del formulario
-    $folio = $_POST['folio'];
-    $ubicacion = $_POST['ubicacion'];
-
-    // Directorio donde se guardarán los archivos
-    $directorio = "archivos/$folio/";
-
-    // Verificar si el directorio ya existe
-    if (!file_exists($directorio)) {
-        // Si no existe, crear el directorio
-        mkdir($directorio, 0777, true);
-    }
-
-    // Manejar la subida de archivos
-    $escriturasPath = $directorio . basename($_FILES['escrituras']['name']);
-    $boletaPredialPath = $directorio . basename($_FILES['boleta-predial']['name']);
-    $identificacionPath = $directorio . basename($_FILES['identificacion']['name']);
-
-    if (move_uploaded_file($_FILES['escrituras']['tmp_name'], $escriturasPath) &&
-        move_uploaded_file($_FILES['boleta-predial']['tmp_name'], $boletaPredialPath) &&
-        move_uploaded_file($_FILES['identificacion']['tmp_name'], $identificacionPath)) {
-        // Archivos subidos con éxito
-
-        // Preparar la consulta SQL para actualizar la base de datos
-        $sql = "UPDATE formulario SET ubicacion = '$ubicacion', estatus = 'verificador', 
-                escrituras = '$escriturasPath', boleta_predial = '$boletaPredialPath', 
-                identificacion = '$identificacionPath' WHERE folio = '$folio'";
-
-        // Obtener una conexión nueva
-        $conn = connection();
-
-        // Ejecutar la consulta
-        if ($conn->query($sql) === TRUE) {
-            // Éxito al actualizar la base de datos
-            // Redirigir a la descarga del PDF
-            header("Location: download_pdf.php?folio=$folio");
-            exit(); // Importante: Termina la ejecución después de redirigir
-        } else {
-            // Error al actualizar la base de datos
-            echo "Error: " . $sql . "<br>" . $conn->error;
-        }
-
-        // Cerrar la conexión a la base de datos
-        $conn->close();
-    } else {
-        // Error al subir los archivos
-        echo "Error al subir los archivos.";
-    }
-} else {
-    // No se ha seleccionado un folio
-    echo "No se ha seleccionado un folio.";
-}
-?>
-
