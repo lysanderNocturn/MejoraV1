@@ -24,12 +24,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nombre = $_POST['nombre'];
     $nombre_solicitante = $_POST['nombre_solicitante'];
     $direccion = $_POST['direccion'];
+    $numero = $_POST['numero'];
+    $colonia = $_POST['colonia'];
     $localidad = $_POST['localidad'];
     $tipoTramite = $_POST['tipoTramite'];
     $correo = $_POST['correo'];
     $telefono = $_POST['telefono'];
     $usuario = $_POST['usuario'];
     $observaciones = $_POST['observaciones'];
+
 
     // Calcular la fecha de ingreso (hoy)
     $fecha_ingreso = date('d-m-Y');
@@ -41,8 +44,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $conexion = connection();
 
     // Preparar la consulta SQL para insertar los datos en la base de datos
-    $sql = "INSERT INTO formulario (folio, nombre_propietario, direccion, localidad, tipo_tramite, fecha_ingreso, nombre_solicitante, telefono, correo, usuario_recibe, observaciones, fecha_entrega_estimada, estatus) 
-            VALUES (folio(), '$nombre', '$direccion', '$localidad', '$tipoTramite', '$fecha_ingreso', '$nombre_solicitante', '$telefono', '$correo', '$usuario', '$observaciones', '$fecha_entrega_estimada', 'ventanilla')";
+    $sql = "INSERT INTO formulario (folio, nombre_propietario, direccion, numero, colonia, localidad, tipo_tramite, fecha_ingreso, nombre_solicitante, telefono, correo, usuario_recibe, observaciones, fecha_entrega_estimada, estatus) 
+            VALUES (folio(), '$nombre', '$direccion', '$numero', '$colonia', '$localidad', '$tipoTramite', '$fecha_ingreso', '$nombre_solicitante', '$telefono', '$correo', '$usuario', '$observaciones', '$fecha_entrega_estimada', 'ventanilla')";
 
     // Ejecutar la consulta
     if (mysqli_query($conexion, $sql)) {

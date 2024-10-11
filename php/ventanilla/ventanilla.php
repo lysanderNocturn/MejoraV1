@@ -78,6 +78,20 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
+                            <label for="numero">Numero:</label>
+                            <input type="text" class="form-control" id="numero" name="numero" required>
+                            <div class="invalid-feedback">Por favor ingresa su Numero.</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="colonia">Colonia:</label>
+                            <input type="text" class="form-control" id="colonia" name="colonia" required>
+                            <div class="invalid-feedback">Por favor ingresa su Colonia.</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
                             <label for="localidad">Localidad:</label>
                             <input type="text" class="form-control" id="localidad" name="localidad" required>
                             <div class="invalid-feedback">Por favor ingresa su localidad.</div>

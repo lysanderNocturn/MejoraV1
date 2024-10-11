@@ -1,13 +1,13 @@
 <?php
-include('../conection.php');  // Asegúrate de que la ruta sea correcta y que $mysqli esté correctamente definido
+include('conexion.php');  // Asegúrate de que la ruta sea correcta y que $mysqli_connection esté correctamente definido
 
 $folio = $_POST['folio'];
 $comentarios = $_POST['comentarios'];
 $numeroDireccion = $_POST['numeroDireccion'];
 $lote = $_POST['lote'];
 $manzana = $_POST['manzana'];
-$estatus = 'ventanilla';
-$target_file = null;  // Inicializamos la variable para la imagen
+$estatus = 'ventanilla finalizado';
+$target_file = null; 
 
 // Verificar si se ha subido una imagen
 if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] == 0) {
@@ -26,20 +26,18 @@ if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] == 0) {
         echo "Error al subir la imagen.<br />";
     }
 }
-
-// Actualizar los datos en la base de datos según el folio
-if ($mysqli) {
+if ($mysqli_connection) {
     // Si se subió una imagen, la incluimos en la actualización, de lo contrario, omitimos la columna
     if ($target_file) {
-        $sql = "UPDATE formulario SET comentarios = ?, numeroDireccion = ?, lote = ?, manzana = ?, imagen = ?, estatus = ? WHERE folio = ?";
+        $sql = "UPDATE formulario SET comentarios = ?, numeroDireccion = ?, lote = ?, manzana = ?, estatus = ?, imagen = ? WHERE folio = ?";
     } else {
         $sql = "UPDATE formulario SET comentarios = ?, numeroDireccion = ?, lote = ?, manzana = ?, estatus = ? WHERE folio = ?";
     }
 
-    $stmt = $mysqli->prepare($sql);
+    $stmt = $mysqli_connection->prepare($sql);
     if ($stmt) {
         if ($target_file) {
-            $stmt->bind_param('sssssss', $comentarios, $numeroDireccion, $lote, $manzana, $target_file, $estatus, $folio);
+            $stmt->bind_param('sssssss', $comentarios, $numeroDireccion, $lote, $manzana, $estatus, $target_file, $folio);
         } else {
             $stmt->bind_param('ssssss', $comentarios, $numeroDireccion, $lote, $manzana, $estatus, $folio);
         }
@@ -56,4 +54,5 @@ if ($mysqli) {
 } else {
     echo "Error: No se pudo conectar a la base de datos.<br />";
 }
+
 ?>

@@ -50,8 +50,14 @@ if ($data) {
     $pdf->SetXY(52, 40);
     $pdf->Write(0, $data['nombre_propietario']);
     
-    $pdf->SetXY(33, 49); 
+    $pdf->SetXY(31, 49); 
     $pdf->Write(0, $data['direccion']);
+
+    $pdf->SetXY(86, 49); 
+    $pdf->Write(0, $data['numero']);
+    
+    $pdf->SetXY(113, 49); 
+    $pdf->Write(0, $data['colonia']);
 
     $pdf->SetXY(33, 57); 
     $pdf->Write(0, $data['localidad']);
